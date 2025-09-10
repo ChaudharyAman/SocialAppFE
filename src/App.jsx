@@ -10,6 +10,7 @@ import ProfileCard from "./Pages/profileDashboardPage";
 import Feed from "./Pages/feed";
 import UserProfilePage from "./Pages/userProfilePage";
 import Signup from "./Pages/signUpPage";
+import CreatePost from "./Pages/createPost";
 
 const Dashboard = lazy(() => import("./Pages/dashboard"));
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/feed" element={<Feed/>} />
           <Route path="/user/:id" element={<UserProfilePage />} />
           <Route path="/signUp" element={<Signup />} />
+           <Route path="/createPost" element={<CreatePost/>} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Suspense>

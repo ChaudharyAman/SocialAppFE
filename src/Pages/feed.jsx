@@ -10,6 +10,7 @@ import ProfileCard from "./profileDashboardPage";
 import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
 import SearchModal from "../Models/friendSearchModel";
+import CreatePost from "./createPost";
 
 const Feed = () => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const Feed = () => {
 
           newPosts.forEach((post) => {
             dispatch(fetchComments(post.post_id));
-            dispatch(fetchLikes(post.post_id)); // ✅ fetch likes state when post loads
+            dispatch(fetchLikes(post.post_id));
           });
         }
       }
@@ -132,10 +133,12 @@ const Feed = () => {
             const latestComments = allComments.slice(-3);
 
             return (
+          
               <div
                 key={post.post_id}
                 className="w-full max-w-xl bg-white rounded-2xl shadow-md p-4"
               >
+        
                 <div className="flex items-center gap-3 mb-3">
                   <img
                     src={post.user.media_url}
