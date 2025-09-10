@@ -17,7 +17,7 @@ const UserProfilePage = () => {
         const res = await axios.get(`${API_BASE_URL}/users/${id}`, {
           withCredentials: true,
         });
-        setUser(res.data.user[0]); // since backend returns array
+        setUser(res.data.user[0]);
       } catch (err) {
         console.error("Error fetching user:", err);
         navigate("/profile");

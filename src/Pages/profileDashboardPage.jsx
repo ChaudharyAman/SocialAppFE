@@ -24,7 +24,7 @@ const ProfileCard = () => {
   if (!loggedInUser) return null;
 
   return (
-    <div className=" rounded-2xl p-7 m-8 mr-auto justify-center shadow-lg overflow-hidden">
+    <div className=" rounded-2xl pt-8 mt-8 p-1 m-1 ml-4 justify-center shadow-lg overflow-hidden">
       <div className="h-28 w-full relative">
         <img
           src={loggedInUser.media_url}

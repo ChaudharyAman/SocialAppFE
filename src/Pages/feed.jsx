@@ -9,10 +9,10 @@ import CommentsModal from "../Models/commentModel";
 import ProfileCard from "./profileDashboardPage";
 import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
+import SearchModal from "../Models/friendSearchModel";
 
 const Feed = () => {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
@@ -24,12 +24,13 @@ const navigate = useNavigate();
   const [selectedPostId, setSelectedPostId] = useState(null);
 
   const [commentInputs, setCommentInputs] = useState({});
+  const [showSearchModal, setShowSearchModal] = useState(false);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
   const dispatch = useDispatch();
-  const { likesByPost } = useSelector((state) => state.likes);
+  const { likesByPost, likedStatusByPost } = useSelector((state) => state.likes);
   const { commentsByPost, countsByPost } = useSelector((state) => state.comments);
 
   const fetchPosts = async () => {
@@ -52,12 +53,15 @@ const navigate = useNavigate();
 
           newPosts.forEach((post) => {
             dispatch(fetchComments(post.post_id));
+            dispatch(fetchLikes(post.post_id)); // ✅ fetch likes state when post loads
           });
         }
       }
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Error fetching posts:", err);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -103,166 +107,183 @@ const navigate = useNavigate();
   };
 
   return (
-//  FOR ADDING THE SEARCH BAR BELOW ONE DIV
-    <div >
-      <div>
-            <input
-              className="w-full text-center p-2 rounded"
-              placeholder="Search with social..."
-            />
-        </div> 
-    <div className=" flex flex-row m-0">
-      <div className=" bg-gray300/30">
-        <ProfileCard/>
+    <div>
+      <div className="p-4 bg-white shadow rounded mb-4">
+        <button
+          onClick={() => setShowSearchModal(true)}
+          className="w-full text-center p-2 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer"
+        >
+          🔍 Search with social...
+        </button>
       </div>
-    <div className="flex flex-col mt-8 items-center gap-6 p-6 bg-white min-h-screen">
-      {data.map((post) => {
-        const postLikes = likesByPost[post.post_id] || post.likes || [];
-        const allComments = commentsByPost[post.post_id] || [];
-        const commentCount = countsByPost[post.post_id] ?? post.comments?.length ?? 0;
 
-        const latestComments = allComments.slice(-3);
+      <div className="flex flex-row m-0">
+        <div className="bg-white min-w-[24%]">
+          <ProfileCard />
+        </div>
 
-        return (
-          <div
-            key={post.post_id}  
-            className="w-full max-w-xl bg-white rounded-2xl shadow-md p-4"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <img
-                src={post.user.media_url}
-                alt={post.user.username}
-                className="w-12 h-12 rounded-full object-cover"
-              />
-              <div>
-                <h2 className="font-semibold">
-                  {post.user.first_name} {post.user.last_name}
-                </h2>
-                <p 
-                 onClick={() => navigate(`/user/${post.user.id}`)}
-                className="text-sm cursor-pointer text-gray-500 hover:text-gray-700 hover:font-semibold">@{post.user.username}</p>
-                <p className="text-xs text-gray-400">
-                  {new Date(post.created_at).toLocaleString()}
-                </p>
-              </div>
-            </div>
+        <div className="flex flex-col mt-8 pt-6 items-center gap-2 min-w-[50%] bg-white min-h-screen">
+          {data.map((post) => {
+            const postLikes = likesByPost[post.post_id] || post.likes || [];
+            const isLiked = likedStatusByPost[post.post_id] || false;
+            const allComments = commentsByPost[post.post_id] || [];
+            const commentCount =
+              countsByPost[post.post_id] ?? post.comments?.length ?? 0;
+            const latestComments = allComments.slice(-3);
 
-            {post.media_url && (
-              <div>
-                {post.media_url.endsWith(".mp4") ? (
-                  <video
-                    src={post.media_url}
-                    controls
-                    className="w-full rounded-lg mb-3"
-                  />
-                ) : (
+            return (
+              <div
+                key={post.post_id}
+                className="w-full max-w-xl bg-white rounded-2xl shadow-md p-4"
+              >
+                <div className="flex items-center gap-3 mb-3">
                   <img
-                    src={post.media_url}
-                    alt="post"
-                    className="w-full rounded-lg mb-3 object-cover"
+                    src={post.user.media_url}
+                    alt={post.user.username}
+                    className="w-12 h-12 rounded-full object-cover"
                   />
-                )}
-              </div>
-            )}
-
-            {post.text && <p className="mb-3 text-gray-800">{post.text}</p>}
-
-            <div className="flex justify-between text-gray-600 text-sm mb-2">
-              <span
-                onClick={() => handleShowLikes(post.post_id)}
-                className="cursor-pointer hover:underline"
-              >
-                👍 {Array.isArray(postLikes) ? postLikes.length : 0} Likes
-              </span>
-              <span
-                onClick={() => handleShowComments(post.post_id)}
-                className="cursor-pointer hover:underline"
-              >
-                💬 {commentCount} Comments
-              </span>
-            </div>
-
-            <div className="flex justify-around border-t pt-2 text-gray-600 text-sm">
-              <button
-                className="flex items-center gap-2 hover:text-blue-500"
-                onClick={() => handleToggleLike(post.post_id)}
-              >
-                <FaThumbsUp /> Like
-              </button>
-              <button
-                className="flex items-center gap-2 hover:text-green-500"
-                onClick={() => handleShowComments(post.post_id)}
-              >
-                <FaRegCommentAlt /> Comment
-              </button>
-            </div>
-
-            <div className="mt-3 space-y-2">
-              {latestComments.map((c) => (
-                <div key={c.id} className="flex items-start gap-2">
-                  <img
-                    src={c.user?.media_url}
-                    alt={c.user?.username}
-                    className="w-6 h-6 rounded-full object-cover"
-                  />
-                  <div className="bg-gray-100 px-3 py-1 rounded-lg text-sm">
-                    {c.text}
+                  <div>
+                    <h2 className="font-semibold">
+                      {post.user.first_name} {post.user.last_name}
+                    </h2>
+                    <p
+                      onClick={() => navigate(`/user/${post.user.id}`)}
+                      className="text-sm cursor-pointer text-gray-500 hover:text-gray-700 hover:font-semibold"
+                    >
+                      @{post.user.username}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(post.created_at).toLocaleString()}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
 
-            {loggedInUser && (
-              <div className="flex items-center mt-3 gap-2">
-                <img
-                  src={loggedInUser.media_url}
-                  alt="your profile"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <input
-                  type="text"
-                  placeholder="Add a comment..."
-                  value={commentInputs[post.post_id] || ""}
-                  onChange={(e) =>
-                    setCommentInputs((prev) => ({
-                      ...prev,
-                      [post.post_id]: e.target.value,
-                    }))
-                  }
-                  className="flex-1 px-3 py-1 rounded-full border text-sm focus:outline-none"
-                />
-                <button
-                  onClick={() => handleCommentSubmit(post.post_id)}
-                  className="px-3 py-1 bg-gray-700 text-white rounded-full hover:bg-black text-sm"
-                >
-                  Post
-                </button>
+                {post.media_url && (
+                  <div>
+                    {post.media_url.endsWith(".mp4") ? (
+                      <video
+                        src={post.media_url}
+                        controls
+                        className="w-full rounded-lg mb-3"
+                      />
+                    ) : (
+                      <img
+                        src={post.media_url}
+                        alt="post"
+                        className="w-full rounded-lg mb-3 object-cover"
+                      />
+                    )}
+                  </div>
+                )}
+
+                {post.text && <p className="mb-3 text-gray-800">{post.text}</p>}
+
+                <div className="flex justify-between text-gray-600 text-sm mb-2">
+                  <span
+                    onClick={() => handleShowLikes(post.post_id)}
+                    className="cursor-pointer hover:underline"
+                  >
+                    👍 {Array.isArray(postLikes) ? postLikes.length : 0} Likes
+                  </span>
+                  <span
+                    onClick={() => handleShowComments(post.post_id)}
+                    className="cursor-pointer hover:underline"
+                  >
+                    💬 {commentCount} Comments
+                  </span>
+                </div>
+
+                <div className="flex justify-around border-t pt-2 text-gray-600 text-sm">
+                  <button
+                    className={`flex items-center gap-2 ${
+                      isLiked
+                        ? "text-blue-500"
+                        : "text-gray-600 hover:text-blue-500"
+                    }`}
+                    onClick={() => handleToggleLike(post.post_id)}
+                  >
+                    <FaThumbsUp /> {isLiked ? "Liked" : "Like"}
+                  </button>
+                  <button
+                    className="flex items-center gap-2 hover:text-green-500"
+                    onClick={() => handleShowComments(post.post_id)}
+                  >
+                    <FaRegCommentAlt /> Comment
+                  </button>
+                </div>
+
+                <div className="mt-3 space-y-2">
+                  {latestComments.map((c) => (
+                    <div key={c.id} className="flex items-start gap-2">
+                      <img
+                        src={c.user?.media_url}
+                        alt={c.user?.username}
+                        className="w-6 h-6 rounded-full object-cover"
+                      />
+                      <div className="bg-gray-100 px-3 py-1 rounded-lg text-sm">
+                        {c.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {loggedInUser && (
+                  <div className="flex items-center mt-3 gap-2">
+                    <img
+                      src={loggedInUser.media_url}
+                      alt="your profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Add a comment..."
+                      value={commentInputs[post.post_id] || ""}
+                      onChange={(e) =>
+                        setCommentInputs((prev) => ({
+                          ...prev,
+                          [post.post_id]: e.target.value,
+                        }))
+                      }
+                      className="flex-1 px-3 py-1 rounded-full border text-sm focus:outline-none"
+                    />
+                    <button
+                      onClick={() => handleCommentSubmit(post.post_id)}
+                      className="px-3 py-1 bg-gray-700 text-white rounded-full hover:bg-black text-sm"
+                    >
+                      Post
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        );
-      })}
+            );
+          })}
 
-      {loading && <p className="text-gray-500">Loading more posts...</p>}
-      {!hasMore && <p className="text-gray-500">No more posts</p>}
+          {loading && <p className="text-gray-500">Loading more posts...</p>}
+          {!hasMore && <p className="text-gray-500">No more posts</p>}
 
-      {showLikesModal && selectedPostId && (
-        <LikesModal
-          postId={selectedPostId}
-          onClose={() => setShowLikesModal(false)}
-        />
-      )}
-      {showCommentsModal && selectedPostId && (
-        <CommentsModal
-          postId={selectedPostId}
-          onClose={() => setShowCommentsModal(false)}
-        />
-      )}
-    </div>
-      <div className="mt-8 max-w-1/3 bg-white">
-       <FriendsList/>
+          {showLikesModal && selectedPostId && (
+            <LikesModal
+              postId={selectedPostId}
+              onClose={() => setShowLikesModal(false)}
+            />
+          )}
+          {showCommentsModal && selectedPostId && (
+            <CommentsModal
+              postId={selectedPostId}
+              onClose={() => setShowCommentsModal(false)}
+            />
+          )}
+        </div>
+
+        <div className="mt-8 min-w-[24%] bg-white">
+          <FriendsList />
+        </div>
       </div>
-    </div>
+
+      <SearchModal
+        isOpen={showSearchModal}
+        onClose={() => setShowSearchModal(false)}
+      />
     </div>
   );
 };
