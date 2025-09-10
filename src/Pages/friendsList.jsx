@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, fetchSentRequests, fetchFriends, sendFriendRequest, cancelFriendRequest } from "../Redux/Slices/friendSlice";
+import {
+  fetchUsers,
+  fetchSentRequests,
+  fetchFriends,
+  sendFriendRequest,
+  cancelFriendRequest,
+  resetUsers,
+} from "../Redux/Slices/friendSlice";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { FaUserPlus, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -9,35 +16,44 @@ const FriendsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUsers, loading, error, requestStatus, myFriends } = useSelector((state) => state.friends);
-  const loggedInUser = useSelector((state) => state.loggedInUser.data);
+  const {
+    allUsers,
+    loading,
+    error,
+    requestStatus,
+    myFriends,
+    currentPage,
+    totalPages,
+  } = useSelector((state) => state.friends);
 
-  const [showAll, setShowAll] = useState(false);
+  const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
   useEffect(() => {
     dispatch(fetchLoggedinUser());
-    dispatch(fetchUsers());
     dispatch(fetchSentRequests());
     dispatch(fetchFriends());
+
+    dispatch(resetUsers());
+    dispatch(fetchUsers({ page: 1, limit: 10 }));
   }, [dispatch]);
-  
-  if (loading) return <p className="text-center">Loading users...</p>;
+
+  if (loading && currentPage === 1) {
+    return <p className="text-center">Loading users...</p>;
+  }
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   const filteredUsers = allUsers
     .filter((u) => u.id !== loggedInUser?.id)
     .filter((u) => !myFriends?.some((f) => f.id === u.id));
 
-  const visibleUsers = showAll ? filteredUsers : filteredUsers.slice(0, 10);
-
   return (
-    <div className="max-w-2xl mx-auto bg-white backdrop-blur-lg rounded-3xl shadow-xl">
+    <div className="max-w-2xl mx-auto bg-white backdrop-blur-lg rounded-3xl pb-5 shadow-xl">
       <h2 className="text-2xl flex font-bold text-gray-800 mb-4">
         👥 Explore Users
       </h2>
 
       <ul className="space-y-4">
-        {visibleUsers.map((user) => {
+        {filteredUsers.map((user) => {
           const status = requestStatus[user.id];
 
           return (
@@ -84,13 +100,17 @@ const FriendsList = () => {
         })}
       </ul>
 
-      {!showAll && filteredUsers.length > 15 && (
-        <div className="text-center mt-4">
+      {/* View More button */}
+      {currentPage < totalPages && (
+        <div className="text-center mt-6">
           <button
-            onClick={() => setShowAll(true)}
-            className="px-6 py-2 w-full mt-6 bg-gray-300 text-gray-800 hover:text-white font-semibold rounded-lg hover:bg-gray-600 cursor-pointer transition flex items-center justify-center gap-2"
+            onClick={() =>
+              dispatch(fetchUsers({ page: currentPage + 1, limit: 10 }))
+            }
+            disabled={loading}
+            className="px-6 py-2 bg-gray-300 text-gray-800 hover:text-white font-semibold rounded-lg hover:bg-gray-600 cursor-pointer transition disabled:opacity-50"
           >
-            View All
+            {loading ? "Loading..." : "View More"}
           </button>
         </div>
       )}
