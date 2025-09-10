@@ -10,7 +10,6 @@ import ProfileCard from "./Pages/profileDashboardPage";
 import Feed from "./Pages/feed";
 import UserProfilePage from "./Pages/userProfilePage";
 import Signup from "./Pages/signUpPage";
-import toast from "react-hot-toast";
 
 const Dashboard = lazy(() => import("./Pages/dashboard"));
 

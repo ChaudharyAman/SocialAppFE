@@ -20,7 +20,7 @@ const FriendsList = () => {
     dispatch(fetchSentRequests());
     dispatch(fetchFriends());
   }, [dispatch]);
-
+  
   if (loading) return <p className="text-center">Loading users...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
