@@ -5,7 +5,7 @@ import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const UserProfilePage = () => {
-  const { id } = useParams();
+  const { username } = useParams();
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -14,7 +14,7 @@ const UserProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/users/${id}`, {
+        const res = await axios.get(`${API_BASE_URL}/User/${username}`, {
           withCredentials: true,
         });
         setUser(res.data.user[0]);
@@ -27,7 +27,7 @@ const UserProfilePage = () => {
     };
 
     fetchUser();
-  }, [id, navigate]);
+  }, [username, navigate]);
 
   if (loading) return <p className="text-center mt-20">Loading...</p>;
   if (!user) return <p className="text-center mt-20">User not found</p>;
@@ -37,7 +37,7 @@ const UserProfilePage = () => {
   );
 
   return (
-    <div className="p-6 bg-gradient-to-b from-white to-gray-200">
+    <div className="p-6 bg-gradient-to-b  from-white to-gray-200 min-h-screen">
       <div className="relative w-full h-[40vh] rounded-lg overflow-hidden mb-20">
         <img
           src={user.media_url}

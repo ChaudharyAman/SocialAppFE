@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 const SearchModal = ({ isOpen, onClose }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -15,11 +16,18 @@ const SearchModal = ({ isOpen, onClose }) => {
 
     if (value.trim().length > 0) {
       try {
-        const res = await fetch(`${API_BASE_URL}/user/${value}`);
-        const data = await res.json();
-        setSearchResults(data.users || []);
-      } catch (error) {
-        console.error("Error fetching users:", error);
+        const res = await axios.get(`${API_BASE_URL}/fetchUser/${value}`, {
+          withCredentials: true, 
+        });
+
+        console.log("Search response:", res.data); 
+        setSearchResults(res.data.users || []);
+      } 
+      catch (error) {
+        console.error(
+          "Error fetching users:",
+          error.response?.data || error.message
+        );
         setSearchResults([]);
       }
     } else {
@@ -66,9 +74,9 @@ const SearchModal = ({ isOpen, onClose }) => {
           {searchResults.length > 0 ? (
             searchResults.slice(0, 10).map((user) => (
               <div
-                key={user.id}
+                key={user.username}
                 onClick={() => {
-                  navigate(`/user/${user.id}`);
+                  navigate(`/user/${user.username}`); // ✅ lowercase route
                   onClose();
                   setQuery("");
                   setSearchResults([]);

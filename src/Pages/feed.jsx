@@ -107,6 +107,8 @@ const Feed = () => {
     setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
   };
 
+
+
   return (
     <div>
       <div className="p-4 bg-white shadow rounded mb-4">
@@ -153,7 +155,7 @@ const Feed = () => {
                       {post.user.first_name} {post.user.last_name}
                     </h2>
                     <p
-                      onClick={() => navigate(`/user/${post.user.id}`)}
+                      onClick={() => navigate(`/User/${post.user.username}`)}
                       className="text-sm cursor-pointer text-gray-500 hover:text-gray-700 hover:font-semibold"
                     >
                       @{post.user.username}

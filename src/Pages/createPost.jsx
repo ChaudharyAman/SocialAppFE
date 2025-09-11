@@ -62,7 +62,8 @@ const CreatePost = () => {
       );
 
       if (res.data.success) {
-        navigate("/feed"); 
+        navigate("/feed");
+        navigate(0);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to create post.");
@@ -73,7 +74,7 @@ const CreatePost = () => {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-lg  rounded-2xl">
-      <h2 className="text-2xl font-bold mb-6">✍️ Create a Post</h2>
+      <h2 className="text-2xl font-bold mb-6">💭 What’s on your mind?</h2>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
 

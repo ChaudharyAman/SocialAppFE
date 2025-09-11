@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers,  fetchSentRequests,  fetchFriends,  sendFriendRequest,  cancelFriendRequest,  resetUsers,} from "../Redux/Slices/friendSlice";
+import {
+  fetchUsers,
+  fetchSentRequests,
+  fetchFriends,
+  sendFriendRequest,
+  cancelFriendRequest,
+  resetUsers,
+} from "../Redux/Slices/friendSlice";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { FaUserPlus, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +16,15 @@ const FriendsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUsers, loading, error, requestStatus, myFriends, currentPage, totalPages, } = useSelector((state) => state.friends);
+  const {
+    allUsers,
+    loading,
+    error,
+    requestStatus,
+    myFriends,
+    currentPage,
+    totalPages,
+  } = useSelector((state) => state.friends);
 
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
@@ -57,7 +72,7 @@ const FriendsList = () => {
                     {user.first_name} {user.last_name}
                   </h3>
                   <p
-                    onClick={() => navigate(`/user/${user.id}`)}
+                    onClick={() => navigate(`/User/${user.username}`)}
                     className="text-sm hover:text-gray-700 hover:font-semibold cursor-pointer text-gray-500"
                   >
                     @{user.username}

@@ -28,7 +28,7 @@ function App() {
           <Route path="/friends" element={<FriendsList/>} />
           <Route path="/profileDashboard" element={<ProfileCard/>} />
           <Route path="/feed" element={<Feed/>} />
-          <Route path="/user/:id" element={<UserProfilePage />} />
+          <Route path="/User/:username" element={<UserProfilePage />} />
           <Route path="/signUp" element={<Signup />} />
            <Route path="/createPost" element={<CreatePost/>} />
           <Route path="*" element={<Navigate to="/login" />} />
