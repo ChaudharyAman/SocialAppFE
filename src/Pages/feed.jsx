@@ -124,6 +124,9 @@ const Feed = () => {
         </div>
 
         <div className="flex flex-col mt-8 pt-6 items-center gap-2 min-w-[50%] bg-white min-h-screen">
+          <div className="w-full">
+          <CreatePost/>
+          </div>
           {data.map((post) => {
             const postLikes = likesByPost[post.post_id] || post.likes || [];
             const isLiked = likedStatusByPost[post.post_id] || false;

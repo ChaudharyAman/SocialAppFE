@@ -9,7 +9,6 @@ export const fetchUsers = createAsyncThunk(
         `http://localhost:3000/api/v1/users?page=${page}&limit=${limit}`,
         { withCredentials: true }
       );
-
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -26,7 +25,7 @@ export const fetchSentRequests = createAsyncThunk(
       const res = await axios.get("http://localhost:3000/api/v1/requestSent", {
         withCredentials: true,
       });
-      return res.data.requests;
+      return res.data.requests; 
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Failed to fetch sent requests"
@@ -37,14 +36,18 @@ export const fetchSentRequests = createAsyncThunk(
 
 export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
-  async (friend_id, { rejectWithValue }) => {
+  async (username, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/sendRequest/${friend_id}`,
+        `http://localhost:3000/api/v1/sendRequest/${username}`,
         {},
         { withCredentials: true }
       );
-      return { friend_id, message: res.data.message };
+      return {
+        username,
+        data: res.data.data, 
+        message: res.data.message,
+      };
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Failed to send request"
@@ -55,13 +58,13 @@ export const sendFriendRequest = createAsyncThunk(
 
 export const cancelFriendRequest = createAsyncThunk(
   "friends/cancelFriendRequest",
-  async (friend_id, { rejectWithValue }) => {
+  async (username, { rejectWithValue }) => {
     try {
       const res = await axios.delete(
-        `http://localhost:3000/api/v1/cancelRequest/${friend_id}`,
+        `http://localhost:3000/api/v1/cancelRequest/${username}`,
         { withCredentials: true }
       );
-      return { friend_id, message: res.data.message };
+      return { username, message: res.data.message };
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Failed to cancel request"
@@ -70,6 +73,7 @@ export const cancelFriendRequest = createAsyncThunk(
   }
 );
 
+
 export const fetchFriends = createAsyncThunk(
   "friends/fetchFriends",
   async (_, { rejectWithValue }) => {
@@ -77,11 +81,9 @@ export const fetchFriends = createAsyncThunk(
       const res = await axios.get("http://localhost:3000/api/v1/friends", {
         withCredentials: true,
       });
-      return res.data.friends;
+      return res.data.friends; 
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data?.message || err.message
-      );
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
@@ -92,7 +94,7 @@ const friendSlice = createSlice({
     allUsers: [],
     sentRequests: [],
     myFriends: [],
-    requestStatus: {},
+    requestStatus: {}, 
     totalUsers: 0,
     totalPages: 0,
     currentPage: 1,
@@ -108,7 +110,7 @@ const friendSlice = createSlice({
       state.currentPage = 1;
       state.totalPages = 0;
       state.totalUsers = 0;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -135,19 +137,27 @@ const friendSlice = createSlice({
       })
       .addCase(fetchSentRequests.fulfilled, (state, action) => {
         state.sentRequests = action.payload;
-        action.payload.forEach((user) => {
-          state.requestStatus[user.id] = "sent";
+        action.payload.forEach((req) => {
+          state.requestStatus[req.friend_id] = "sent";
         });
       })
       .addCase(sendFriendRequest.fulfilled, (state, action) => {
-        state.requestStatus[action.payload.friend_id] = "sent";
-        state.sentRequests.push({ id: action.payload.friend_id });
+        const { data } = action.payload;
+        state.requestStatus[data.friend_id] = "sent";
+        state.sentRequests.push({
+          friend_id: data.friend_id,
+          friend_username: data.friend_username,
+          status: data.status,
+        });
       })
-
       .addCase(cancelFriendRequest.fulfilled, (state, action) => {
-        state.requestStatus[action.payload.friend_id] = "none";
+        const username = action.payload.username;
+        const user = state.allUsers.find(u => u.username === username);
+        if (user) {
+          state.requestStatus[user.id] = "none";
+        }
         state.sentRequests = state.sentRequests.filter(
-          (u) => u.id !== action.payload.friend_id
+          (u) => u.friend_username !== username
         );
       })
       .addCase(fetchFriends.pending, (state) => {
@@ -155,7 +165,7 @@ const friendSlice = createSlice({
       })
       .addCase(fetchFriends.fulfilled, (state, action) => {
         state.loading = false;
-        state.myFriends = action.payload;
+        state.myFriends = action.payload; 
       })
       .addCase(fetchFriends.rejected, (state, action) => {
         state.loading = false;
