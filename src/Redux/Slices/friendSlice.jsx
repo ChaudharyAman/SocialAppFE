@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+
 export const fetchUsers = createAsyncThunk(
   "friends/fetchUsers",
   async ({ page = 1, limit = 10 }, { rejectWithValue }) => {
@@ -18,6 +20,8 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
+
+
 export const fetchSentRequests = createAsyncThunk(
   "friends/fetchSentRequests",
   async (_, { rejectWithValue }) => {
@@ -33,6 +37,8 @@ export const fetchSentRequests = createAsyncThunk(
     }
   }
 );
+
+
 
 export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
@@ -56,6 +62,8 @@ export const sendFriendRequest = createAsyncThunk(
   }
 );
 
+
+
 export const cancelFriendRequest = createAsyncThunk(
   "friends/cancelFriendRequest",
   async (username, { rejectWithValue }) => {
@@ -72,6 +80,27 @@ export const cancelFriendRequest = createAsyncThunk(
     }
   }
 );
+
+
+
+export const removeFriend = createAsyncThunk(
+  "friends/removeFriend",
+  async (username, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3000/api/v1/removeFriend/${username}`,
+        { withCredentials: true }
+      );
+      return { username, message: res.data.message };
+    } 
+    catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to remove friend"
+      );
+    }
+  }
+);
+
 
 
 export const fetchFriends = createAsyncThunk(
@@ -170,7 +199,21 @@ const friendSlice = createSlice({
       .addCase(fetchFriends.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(removeFriend.fulfilled, (state, action) => {
+        const { username } = action.payload;
+        state.myFriends = state.myFriends.filter(
+          (friend) => friend.username !== username
+        );
+        const removedUser = state.allUsers.find(u => u.username === username);
+        if (removedUser) {
+          state.requestStatus[removedUser.id] = "none";
+        }
+      })
+      .addCase(removeFriend.rejected, (state, action) => {
+        state.error = action.payload;
       });
+
   },
 });
 
