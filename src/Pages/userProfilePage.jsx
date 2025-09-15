@@ -2,29 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaRegSmile } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchFriends,
-  sendFriendRequest,
-  cancelFriendRequest,
-  fetchSentRequests,
-  removeFriend,
-} from "../Redux/Slices/friendSlice";
+import { fetchFriends, sendFriendRequest, cancelFriendRequest, fetchSentRequests, removeFriend } from "../Redux/Slices/friendSlice";
 import { fetchLikes, toggleLike } from "../Redux/Slices/likeSlice";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
 import axios from "axios";
-import {
-  FaUserPlus,
-  FaUserTimes,
-  FaPhotoVideo,
-  FaImage,
-  FaVideo,
-  FaFont,
-  FaThumbsUp,
-} from "react-icons/fa";
+import { FaUserPlus, FaUserTimes, FaPhotoVideo, FaImage, FaVideo, FaFont, FaThumbsUp } from "react-icons/fa";
 import LikesModal from "../Models/likeModel";
 import CommentsModal from "../Models/commentModel";
 
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const UserProfilePage = () => {
   const { username } = useParams();

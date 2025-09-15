@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaThumbsUp, FaRegCommentAlt } from "react-icons/fa";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,6 +24,7 @@ const Feed = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
 
   const [commentInputs, setCommentInputs] = useState({});
+  const [playingVideo, setPlayingVideo] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
@@ -56,11 +57,9 @@ const Feed = () => {
           });
         }
       }
-    } 
-    catch (err) {
+    } catch (err) {
       console.error("Error fetching posts:", err);
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -105,11 +104,26 @@ const Feed = () => {
     setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
   };
 
-
+  const handleVideoClick = (postId) => {
+    const videoEl = document.getElementById(`video-${postId}`);
+    if (videoEl) {
+      if (playingVideo === postId) {
+        videoEl.pause();
+        setPlayingVideo(null);
+      } else {
+        if (playingVideo) {
+          const prevVideo = document.getElementById(`video-${playingVideo}`);
+          prevVideo?.pause();
+        }
+        videoEl.muted = false;
+        videoEl.play();
+        setPlayingVideo(postId);
+      }
+    }
+  };
 
   return (
     <div>
-
       <div className="flex flex-row m-0">
         <div className="bg-white mt-8 min-w-[24%]">
           <ProfileCard />
@@ -117,8 +131,9 @@ const Feed = () => {
 
         <div className="flex flex-col mt-8 pt-6 items-center gap-2 min-w-[50%] bg-white min-h-screen">
           <div className="w-full">
-          <CreatePost/>
+            <CreatePost />
           </div>
+
           {data.map((post) => {
             const postLikes = likesByPost[post.post_id] || post.likes || [];
             const isLiked = likedStatusByPost[post.post_id] || false;
@@ -127,13 +142,13 @@ const Feed = () => {
               countsByPost[post.post_id] ?? post.comments?.length ?? 0;
             const latestComments = allComments.slice(-3);
 
-            return (
           
+            return (
               <div
                 key={post.post_id}
                 className="w-full max-w-xl bg-white rounded-2xl shadow-md p-4"
               >
-        
+
                 <div className="flex items-center gap-3 mb-3">
                   <img
                     src={post.user.media_url}
@@ -157,13 +172,25 @@ const Feed = () => {
                 </div>
 
                 {post.media_url && (
-                  <div>
+                  <div className="relative">
                     {post.media_url.endsWith(".mp4") ? (
-                      <video
-                        src={post.media_url}
-                        controls
-                        className="w-full rounded-lg mb-3"
-                      />
+                      <div
+                        className="relative cursor-pointer"
+                        onClick={() => handleVideoClick(post.post_id)}
+                      >
+                        <video
+                          id={`video-${post.post_id}`}
+                          src={post.media_url}
+                          loop
+                          playsInline
+                          className="w-full rounded-lg mb-3"
+                        />
+                        {playingVideo !== post.post_id && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-lg font-semibold rounded-lg">
+                           Click to play
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <img
                         src={post.media_url}

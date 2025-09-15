@@ -29,7 +29,7 @@ function App() {
           <Route path="/feed" element={<Feed/>} />
           <Route path="/User/:username" element={<UserProfilePage />} />
           <Route path="/signUp" element={<Signup />} />
-           <Route path="/createPost" element={<CreatePost/>} />
+          <Route path="/createPost" element={<CreatePost/>} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Suspense>

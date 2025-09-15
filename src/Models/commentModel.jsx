@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
+import "./customCss.css";
+
 
 const CommentsModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const CommentsModal = ({ postId, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-300/30 backdrop-blur-[20px] flex justify-center items-center z-50">
-      <div className="bg-gray-200/30 rounded-xl p-6 w-[500px] max-h-[80vh] overflow-y-auto shadow-lg">
+      <div className="bg-gray-200/30 rounded-xl p-6 w-[700px] max-h-[80vh] scrollbar-hide overflow-y-auto shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Comments</h2>
           <button 

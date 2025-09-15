@@ -2,6 +2,8 @@ import { FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchLikes } from "../Redux/Slices/likeSlice";
+import "./customCss.css";
+
 
 const LikesModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const LikesModal = ({ postId, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-300/30 backdrop-blur-[20px] flex justify-center items-center z-50">
-      <div className="bg-gray-200/30 rounded-xl p-6 w-96 max-h-[80vh] overflow-y-auto shadow-lg">
+      <div className="bg-gray-200/30 rounded-xl p-6 w-96 max-h-[80vh] scrollbar-hide overflow-y-auto shadow-lg">
         <div className="flex flex-row justify-between">
           <h2 className="text-lg font-semibold mb-4">Liked by</h2>
           <button
