@@ -1,0 +1,133 @@
+import { useState } from "react";
+import axios from "axios";
+import loginLogo from "../Logo/undraw_enter_nwx3.svg";
+import heroLogo from "../Logo/undraw_login_weas.svg"; 
+import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
+import sticker2 from "../Logo/undraw_cool-break_cipj.svg";
+import { useNavigate } from "react-router-dom";
+
+
+function Login() {
+
+  const navigate = useNavigate()
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/loginUser",
+        { username: username.trim(), password },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        navigate("/feed");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    }
+  };
+
+  return (
+    <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200">
+      <div className="flex w-[900px] bg-gray-400/30 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
+        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-gray-50 to-gray-200 text-gray-700 p-8 relative">
+          <img src={heroLogo} alt="hero" className="w-64 mb-6 drop-shadow-lg" />
+          <h2 className="text-2xl font-bold">Your Journey Starts Here ✨</h2>
+          <p className="mt-2 text-center text-sm opacity-80">
+            Connect with friends, share stories, and explore a new world 🌍
+          </p>
+
+          <img
+            src={sticker1}
+            alt="sticker"
+            className="absolute top-8 left-10 w-12 animate-bounce"
+          />
+          <img
+            src={sticker2}
+            alt="sticker"
+            className="absolute bottom-8 right-10 w-12 animate-pulse"
+          />
+        </div>
+
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center relative">
+          <div className="flex justify-center mb-6">
+            <img
+              src={loginLogo}
+              alt="login character"
+              className="w-28 h-28 drop-shadow-lg"
+            />
+          </div>
+
+          <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-center text-gray-500 mb-6">
+            Sign in to continue your journey
+          </p>
+
+          {error && (
+            <p className="text-red-500 bg-red-100 px-3 py-2 rounded-lg mb-4 text-center shadow-sm">
+              ❌ {error}
+            </p>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="flex items-center border border-gray-300 bg-white/70 rounded-xl overflow-hidden shadow-sm">
+              <span className="px-3 text-gray-400">👤</span>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full p-3 bg-transparent focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 bg-white/70 rounded-xl overflow-hidden shadow-sm">
+              <span className="px-3 text-gray-400">🔑</span>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 bg-transparent focus:outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300"
+            >
+              Login
+            </button>
+          </form>
+
+          <p 
+          onClick={() => navigate(`/signUp`)}
+          className="mt-6 text-sm text-center text-gray-600">
+            Don’t have an account?{" "}
+            <span className="text-gray-800 font-medium cursor-pointer hover:underline">
+              Sign up
+            </span>
+          </p>
+
+          <img
+            src={sticker1}
+            alt="floating"
+            className="absolute -top-3 -right-3 w-10 animate-spin"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
