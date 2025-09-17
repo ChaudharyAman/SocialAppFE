@@ -83,7 +83,7 @@ const CreatePost = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What's on your mind?"
-          className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200"
+          className="w-full p-3 border rounded-lg focus:ring focus:ring-gray-200"
           rows="2"
         />
 

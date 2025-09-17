@@ -11,6 +11,7 @@ import Feed from "./Pages/feed";
 import UserProfilePage from "./Pages/userProfilePage";
 import Signup from "./Pages/signUpPage";
 import CreatePost from "./Pages/createPost";
+import FriendsPage from "./Messages/friendsPageMessage";
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/User/:username" element={<UserProfilePage />} />
           <Route path="/signUp" element={<Signup />} />
           <Route path="/createPost" element={<CreatePost/>} />
+          <Route path="/chat" element={<FriendsPage/>} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Suspense>
