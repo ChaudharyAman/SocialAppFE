@@ -68,9 +68,7 @@ const FriendsPage = () => {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
-      {/* Sidebar */}
       <div className="w-1/3 border-r border-gray-300 backdrop-blur-lg bg-white/80 shadow-lg flex flex-col">
-        {/* Header */}
         <div className="p-5 border-b border-gray-300 flex items-center gap-3">
           <FaUserFriends className="text-gray-700 text-2xl" />
           <h2 className="font-bold text-2xl text-gray-800 tracking-wide">
@@ -78,7 +76,6 @@ const FriendsPage = () => {
           </h2>
         </div>
 
-        {/* Search Bar */}
         <div className="p-4 relative">
           <FaSearch className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
@@ -98,7 +95,6 @@ const FriendsPage = () => {
           )}
         </div>
 
-        {/* Friends List */}
         <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">
           {friendsToShow.length === 0 ? (
             <p className="text-gray-400 text-center mt-10 text-sm italic">
@@ -131,7 +127,6 @@ const FriendsPage = () => {
         </div>
       </div>
 
-      {/* Chat Section */}
       <div className="flex-1 flex flex-col bg-gradient-to-b from-white to-gray-100 shadow-inner">
         {selectedFriend ? (
           <ChatBox friend={selectedFriend} />

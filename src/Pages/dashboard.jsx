@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
-import { FaUser, FaHome, FaSearch, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaHome, FaSearch } from "react-icons/fa";
 import logo from "../Logo/noBackgroundIcon.png";
 import SearchModal from "../Models/friendSearchModel";
+import { motion } from "framer-motion";
+import { MessageSquare } from "lucide-react";
+import { Search } from "lucide-react";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -27,19 +31,35 @@ const Dashboard = () => {
           <img src={logo} alt="Logo" className="h-17 w-auto" />
         </div>
 
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-15 items-center">
           <button
             onClick={() => setIsSearchOpen(true)}
             className="rounded-lg text-gray-600 hover:text-black cursor-pointer"
           >
-            <FaSearch size={22} />
+            <motion.div
+              className="text-black"
+              whileHover={{ scale: 1.2, rotate: 8 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{ rotate: [0, -10, 0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            >
+              <Search size={26} strokeWidth={2} />
+            </motion.div>
           </button>
 
           <button
             onClick={() => navigate("/chat")}
             className="rounded-lg text-gray-600 hover:text-black cursor-pointer"
           >
-            <FaEnvelope size={22} />
+          <motion.div
+              className="text-black"
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <MessageSquare size ={26} />
+            </motion.div>
           </button>
 
           {location.pathname === "/feed" ? (

@@ -11,6 +11,7 @@ import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
 import CreatePost from "./createPost";
 
+
 const Feed = () => {
   const navigate = useNavigate();
 

@@ -76,7 +76,7 @@ const SearchModal = ({ isOpen, onClose }) => {
               <div
                 key={user.username}
                 onClick={() => {
-                  navigate(`/user/${user.username}`); // ✅ lowercase route
+                  navigate(`/user/${user.username}`);
                   onClose();
                   setQuery("");
                   setSearchResults([]);
