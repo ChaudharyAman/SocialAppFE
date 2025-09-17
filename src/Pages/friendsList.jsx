@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, fetchSentRequests, fetchFriends, sendFriendRequest, cancelFriendRequest, resetUsers } from "../Redux/Slices/friendSlice";
+import {
+  fetchUsers,
+  fetchSentRequests,
+  fetchFriends,
+  sendFriendRequest,
+  cancelFriendRequest,
+  resetUsers,
+} from "../Redux/Slices/friendSlice";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { FaUserPlus, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +16,15 @@ const FriendsList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUsers, loading, error, requestStatus, myFriends, currentPage, totalPages } = useSelector((state) => state.friends);
+  const {
+    allUsers,
+    loading,
+    error,
+    requestStatus,
+    myFriends,
+    currentPage,
+    totalPages,
+  } = useSelector((state) => state.friends);
 
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
@@ -98,11 +113,12 @@ const FriendsList = () => {
         )}
       </ul>
 
-
       {currentPage < totalPages && (
         <div className="text-center mt-6">
           <button
-            onClick={() => dispatch(fetchUsers({ page: currentPage + 1, limit: 10 }))}
+            onClick={() =>
+              dispatch(fetchUsers({ page: currentPage + 1, limit: 10 }))
+            }
             disabled={loading}
             className="px-6 py-2 bg-gray-300 text-gray-800 hover:text-white font-semibold rounded-lg hover:bg-gray-600 cursor-pointer transition disabled:opacity-50"
           >

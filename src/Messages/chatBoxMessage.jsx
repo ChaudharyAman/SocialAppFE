@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { FaPaperPlane, FaSmile } from "react-icons/fa";
 
 const socket = io("http://localhost:3000", { withCredentials: true });
 
@@ -47,12 +49,10 @@ const ChatBox = ({ friend }) => {
         return;
       }
 
-      // Always reverse once (oldest first)
       const ordered = [...newMessages].reverse();
 
       setMessages((prev) => {
         if (beforeTimestamp) {
-          // Insert older messages on top
           const container = chatContainerRef.current;
           const scrollHeightBefore = container.scrollHeight;
 
@@ -64,12 +64,10 @@ const ChatBox = ({ friend }) => {
 
           return updated;
         } else {
-          // First load (replace everything)
           setTimeout(() => {
             const container = chatContainerRef.current;
             container.scrollTop = container.scrollHeight;
           }, 0);
-
           return ordered;
         }
       });
@@ -96,7 +94,7 @@ const ChatBox = ({ friend }) => {
         (msg.senderId === friend.id && msg.receiverId === user.id) ||
         (msg.senderId === user.id && msg.receiverId === friend.id)
       ) {
-        setMessages((prev) => [...prev, msg]); // push at bottom
+        setMessages((prev) => [...prev, msg]);
         setTimeout(() => {
           const container = chatContainerRef.current;
           container.scrollTop = container.scrollHeight;
@@ -135,70 +133,98 @@ const ChatBox = ({ friend }) => {
   };
 
   return (
-    <div className="flex flex-col h-full border-l border-gray-200">
-      <div className="p-4 bg-gray-300/30 text-black font-semibold">
-        Chat with {friend.username}
+    <div className="flex flex-col h-full border-l border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Header */}
+      <div className="p-4 flex items-center gap-3 bg-white/70 backdrop-blur-md shadow-sm border-b">
+        <img
+          src={friend.media_url}
+          alt={friend.username}
+          className="w-10 h-10 rounded-full object-cover border-2 border-gray-300"
+        />
+        <div>
+          <h2 className="font-semibold text-gray-800">{friend.username}</h2>
+        </div>
       </div>
 
+      {/* Messages */}
       <div
         ref={chatContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-4 bg-gray-50 scrollbar-hide"
+        className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide"
       >
         {messages.length === 0 ? (
-          <p className="text-center text-gray-400">No messages yet</p>
+          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-gray-300 to-gray-200 flex items-center justify-center shadow-inner animate-pulse backdrop-blur-md">
+                <span className="text-3xl">💬</span>
+              </div>
+              <div className="absolute inset-0 rounded-full border border-gray-400/40 animate-ping"></div>
+            </div>
+            <p className="mt-6 text-lg font-semibold tracking-wide text-gray-600">
+              No conversations yet
+            </p>
+            <p className="text-sm text-gray-400 italic">
+              Be the first to start the story ✨
+            </p>
+          </div>
         ) : (
           messages.map((msg) => {
             const isSender = msg.senderId === user.id;
             const imgUrl = isSender ? user.media_url : friend.media_url;
 
             return (
-              <div
+              <motion.div
                 key={msg.id}
-                className={`flex items-end my-2 max-w-2xl ${
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className={`flex items-end max-w-[70%] ${
                   isSender ? "ml-auto flex-row-reverse" : "mr-auto"
                 }`}
               >
                 <img
                   src={imgUrl}
                   alt="Profile"
-                  className="w-8 h-8 rounded-full object-cover mr-2 ml-2"
+                  className="w-8 h-8 rounded-full object-cover mx-2"
                 />
-
                 <div
-                  className={`px-4 py-2 rounded-2xl break-words shadow-sm ${
+                  className={`px-4 py-2 rounded-2xl shadow-md ${
                     isSender
-                      ? "bg-gray-500 text-white text-left"
-                      : "bg-gray-300 text-gray-800 text-left"
+                      ? "bg-gradient-to-r from-gray-700 to-gray-500 text-white"
+                      : "bg-gray-200 text-gray-800"
                   }`}
                 >
                   {msg.message}
-                  <div className="text-xs text-black/40 mt-1 text-right">
+                  <div className="text-xs opacity-60 mt-1 text-right">
                     {new Date(msg.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })
         )}
       </div>
 
-      <div className="p-3 flex border-t bg-white">
+      {/* Input */}
+      <div className="p-3 flex items-center gap-2 border-t bg-white/80 backdrop-blur-md">
+        <button className="text-gray-500 hover:text-gray-700">
+          <FaSmile size={20} />
+        </button>
         <input
           value={newMsg}
           onChange={(e) => setNewMsg(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 border rounded-lg px-4 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
         <button
           onClick={sendMessage}
-          className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+          className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-full shadow-md"
         >
-          Send
+          <FaPaperPlane />
         </button>
       </div>
     </div>

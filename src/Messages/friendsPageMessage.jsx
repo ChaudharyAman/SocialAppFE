@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChatBox from "./chatBoxMessage";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import axios from "axios";
+import { FaComments, FaTimes, FaUserFriends, FaSearch } from "react-icons/fa";
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ const FriendsPage = () => {
       .catch((err) => console.error("Error fetching friends:", err));
 
     axios
-      .get(`http://localhost:3000/api/v1/recentChats`, { withCredentials: true })
+      .get(`http://localhost:3000/api/v1/recentChats`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) setRecentChats(res.data.recentChats);
       })
@@ -48,8 +51,9 @@ const FriendsPage = () => {
 
   if (status === "loading" || !user) {
     return (
-      <div className="flex items-center justify-center h-screen text-gray-500">
-        Loading user...
+      <div className="flex items-center justify-center h-screen bg-gradient-to-r from-gray-100 via-white to-gray-100 text-gray-600 text-xl font-semibold">
+        <FaComments className="mr-3 text-gray-500 animate-pulse" />
+        Loading chats...
       </div>
     );
   }
@@ -58,54 +62,83 @@ const FriendsPage = () => {
     ? searchResults
     : recentChats
         .map((chat) => (chat.sender.id === user.id ? chat.receiver : chat.sender))
-        .filter((f, idx, arr) => f && arr.findIndex(a => a.id === f.id) === idx); // remove duplicates
+        .filter(
+          (f, idx, arr) => f && arr.findIndex((a) => a.id === f.id) === idx
+        );
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="w-1/3 border-r border-gray-300 bg-white p-4 flex flex-col">
-        <h2 className="font-bold text-xl mb-4 text-gray-700">Chats</h2>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search all friends..."
-          className="p-2 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+      {/* Sidebar */}
+      <div className="w-1/3 border-r border-gray-300 backdrop-blur-lg bg-white/80 shadow-lg flex flex-col">
+        {/* Header */}
+        <div className="p-5 border-b border-gray-300 flex items-center gap-3">
+          <FaUserFriends className="text-gray-700 text-2xl" />
+          <h2 className="font-bold text-2xl text-gray-800 tracking-wide">
+            Chats
+          </h2>
+        </div>
 
-        <div className="flex-1 overflow-y-auto">
+        {/* Search Bar */}
+        <div className="p-4 relative">
+          <FaSearch className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search friends..."
+            className="w-full pl-10 pr-10 py-3 bg-white/70 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              className="absolute right-7 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <FaTimes />
+            </button>
+          )}
+        </div>
+
+        {/* Friends List */}
+        <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">
           {friendsToShow.length === 0 ? (
-            <p className="text-gray-500">
-              {query.trim() ? "No friends found" : "No recent chats"}
+            <p className="text-gray-400 text-center mt-10 text-sm italic">
+              {query.trim()
+                ? "No matching friends found"
+                : "No recent chats yet"}
             </p>
           ) : (
             friendsToShow.map((f) => (
               <div
                 key={f.id}
                 onClick={() => setSelectedFriend(f)}
-                className={`flex items-center p-2 mb-2 cursor-pointer rounded-md transition ${
+                className={`flex items-center p-3 mb-3 rounded-xl cursor-pointer transition-all transform hover:scale-[1.01] hover:shadow-md ${
                   selectedFriend?.id === f.id
-                    ? "bg-gray-100 text-gray-700 font-medium"
-                    : "hover:bg-gray-100 text-gray-700"
+                    ? "bg-gradient-to-r from-gray-200 to-gray-100 border-l-4 border-gray-600"
+                    : "bg-white hover:bg-gray-50"
                 }`}
               >
                 <img
                   src={f.media_url}
                   alt={f.username}
-                  className="w-10 h-10 rounded-full object-cover mr-3 border border-gray-300"
+                  className="w-12 h-12 rounded-full object-cover mr-4 border border-gray-400 shadow-sm"
                 />
-                <span>{f.username}</span>
+                <span className="text-gray-800 font-medium tracking-wide text-lg">
+                  {f.username}
+                </span>
               </div>
             ))
           )}
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col">
+      {/* Chat Section */}
+      <div className="flex-1 flex flex-col bg-gradient-to-b from-white to-gray-100 shadow-inner">
         {selectedFriend ? (
           <ChatBox friend={selectedFriend} />
         ) : (
-          <div className="flex flex-1 items-center justify-center text-gray-500">
-            Select a friend to start chatting
+          <div className="flex flex-1 flex-col items-center justify-center text-gray-500 text-lg font-semibold space-y-3">
+            <FaComments className="text-5xl text-gray-400" />
+            <p>Select a friend to start chatting</p>
           </div>
         )}
       </div>
