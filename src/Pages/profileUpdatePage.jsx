@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import axios from "axios";
-import {  FaUserEdit,  FaTimes,  FaUser,  FaAt,  FaEnvelope,  FaPhone,  FaInfoCircle,  FaLock,  FaGlobe,} from "react-icons/fa";
+import {
+  FaUserEdit,
+  FaTimes,
+  FaUser,
+  FaAt,
+  FaEnvelope,
+  FaPhone,
+  FaInfoCircle,
+  FaLock,
+  FaGlobe,
+} from "react-icons/fa";
 import toast from "react-hot-toast";
-
 
 const ProfileUpdateModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -50,8 +59,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
         gender: loggedInUser.gender || "other",
       });
       setPreviewImage(loggedInUser.media_url || null);
-    
-    };
+    }
   }, [loggedInUser]);
 
   const handleChange = (e) => {

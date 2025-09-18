@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
-
 export const fetchLikes = createAsyncThunk(
   "likes/fetchLikes",
   async (postId, { rejectWithValue }) => {
@@ -23,8 +20,6 @@ export const fetchLikes = createAsyncThunk(
   }
 );
 
-
-
 export const toggleLike = createAsyncThunk(
   "likes/toggleLike",
   async (postId, { rejectWithValue }) => {
@@ -34,8 +29,7 @@ export const toggleLike = createAsyncThunk(
         {},
         { withCredentials: true }
       );
-    } 
-    catch (err) {
+    } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
@@ -44,8 +38,8 @@ export const toggleLike = createAsyncThunk(
 const likesSlice = createSlice({
   name: "likes",
   initialState: {
-    likesByPost: {}, 
-    likedStatusByPost: {}, 
+    likesByPost: {},
+    likedStatusByPost: {},
     status: "idle",
     error: null,
   },

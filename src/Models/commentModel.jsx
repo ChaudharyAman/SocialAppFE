@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
 import "./customCss.css";
 
-
 const CommentsModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
   const { commentsByPost, status } = useSelector((state) => state.comments);
@@ -29,15 +28,15 @@ const CommentsModal = ({ postId, onClose }) => {
       <div className="bg-gray-200/30 rounded-xl p-6 w-[700px] max-h-[80vh] scrollbar-hide overflow-y-auto shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Comments</h2>
-          <button 
-          onClick={onClose} 
-          className="text-gray-700 cursor-pointer hover:text-black">
+          <button
+            onClick={onClose}
+            className="text-gray-700 cursor-pointer hover:text-black"
+          >
             <FaTimes size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} 
-        className="flex gap-2 mb-4">
+        <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
           <input
             type="text"
             value={text}

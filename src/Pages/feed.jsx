@@ -11,7 +11,6 @@ import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
 import CreatePost from "./createPost";
 
-
 const Feed = () => {
   const navigate = useNavigate();
 
@@ -31,8 +30,12 @@ const Feed = () => {
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
   const dispatch = useDispatch();
-  const { likesByPost, likedStatusByPost } = useSelector((state) => state.likes);
-  const { commentsByPost, countsByPost } = useSelector((state) => state.comments);
+  const { likesByPost, likedStatusByPost } = useSelector(
+    (state) => state.likes
+  );
+  const { commentsByPost, countsByPost } = useSelector(
+    (state) => state.comments
+  );
 
   const fetchPosts = async () => {
     if (loading || !hasMore) return;
@@ -143,13 +146,11 @@ const Feed = () => {
               countsByPost[post.post_id] ?? post.comments?.length ?? 0;
             const latestComments = allComments.slice(-3);
 
-          
             return (
               <div
                 key={post.post_id}
                 className="w-full max-w-xl bg-white rounded-2xl shadow-md p-4"
               >
-
                 <div className="flex items-center gap-3 mb-3">
                   <img
                     src={post.user.media_url}
@@ -188,7 +189,7 @@ const Feed = () => {
                         />
                         {playingVideo !== post.post_id && (
                           <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-lg font-semibold rounded-lg">
-                           Click to play
+                            Click to play
                           </div>
                         )}
                       </div>

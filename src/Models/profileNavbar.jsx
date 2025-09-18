@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaPhotoVideo, FaImage, FaVideo, FaFont, FaNewspaper, FaPlus, FaUserFriends } from "react-icons/fa";
+import {
+  FaPhotoVideo,
+  FaImage,
+  FaVideo,
+  FaFont,
+  FaNewspaper,
+  FaPlus,
+  FaUserFriends,
+} from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPendingRequests, acceptFriendRequest } from "../Redux/Slices/friendSlice";
+import {
+  fetchPendingRequests,
+  acceptFriendRequest,
+} from "../Redux/Slices/friendSlice";
 
 const ProfileNavbar = ({ onFilter }) => {
   const navigate = useNavigate();
@@ -12,7 +23,8 @@ const ProfileNavbar = ({ onFilter }) => {
 
   const [showPendingModal, setShowPendingModal] = useState(false);
 
-  const btnClass = "gap-2 cursor-pointer px-4 py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all";
+  const btnClass =
+    "gap-2 cursor-pointer px-4 py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all";
 
   const handleShowPending = () => {
     setShowPendingModal(true);
@@ -73,7 +85,9 @@ const ProfileNavbar = ({ onFilter }) => {
             >
               &times;
             </button>
-            <h2 className="text-xl font-semibold mb-4">Pending Friend Requests</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Pending Friend Requests
+            </h2>
 
             {pendingRequests.length === 0 ? (
               <p className="text-gray-500">No pending requests</p>
@@ -90,15 +104,15 @@ const ProfileNavbar = ({ onFilter }) => {
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <p
-                        className="font-medium"
-                      >
+                      <p className="font-medium">
                         {req.first_name} {req.last_name}
                       </p>
-                      <p className="text-sm text-gray-500 cursor-pointer hover:underline hover:text-black"
+                      <p
+                        className="text-sm text-gray-500 cursor-pointer hover:underline hover:text-black"
                         onClick={() => navigate(`/User/${req.username}`)}
-                      
-                      >@{req.username}</p>
+                      >
+                        @{req.username}
+                      </p>
                     </div>
                   </div>
                   <button

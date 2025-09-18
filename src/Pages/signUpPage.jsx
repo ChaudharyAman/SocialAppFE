@@ -70,24 +70,39 @@ const Signup = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200">
       <div className="flex w-[1000px] bg-gray-400/30 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
-        
         <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-gray-50 to-gray-200 text-gray-700 p-8 relative">
           <img src={heroLogo} alt="hero" className="w-64 mb-6 drop-shadow-lg" />
           <h2 className="text-2xl font-bold">Join Our Community 🚀</h2>
           <p className="mt-2 text-center text-sm opacity-80">
             Create an account, connect with friends, and start your journey 🌍
           </p>
-          <img src={sticker1} alt="sticker" className="absolute top-8 left-10 w-12 animate-bounce" />
-          <img src={sticker2} alt="sticker" className="absolute bottom-8 right-10 w-12 animate-pulse" />
+          <img
+            src={sticker1}
+            alt="sticker"
+            className="absolute top-8 left-10 w-12 animate-bounce"
+          />
+          <img
+            src={sticker2}
+            alt="sticker"
+            className="absolute bottom-8 right-10 w-12 animate-pulse"
+          />
         </div>
 
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center relative">
           <div className="flex justify-center mb-6">
-            <img src={loginLogo} alt="signup character" className="w-28 h-28 drop-shadow-lg" />
+            <img
+              src={loginLogo}
+              alt="signup character"
+              className="w-28 h-28 drop-shadow-lg"
+            />
           </div>
 
-          <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-2">Create Account</h2>
-          <p className="text-center text-gray-500 mb-6">Fill in your details to get started ✨</p>
+          <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-2">
+            Create Account
+          </h2>
+          <p className="text-center text-gray-500 mb-6">
+            Fill in your details to get started ✨
+          </p>
 
           {error && (
             <p className="text-red-500 bg-red-100 px-3 py-2 rounded-lg mb-4 text-center shadow-sm">
@@ -95,7 +110,10 @@ const Signup = () => {
             </p>
           )}
 
-          <form onSubmit={handleSignup} className="space-y-3 max-h-[65vh] overflow-y-auto pr-2">
+          <form
+            onSubmit={handleSignup}
+            className="space-y-3 max-h-[65vh] overflow-y-auto pr-2"
+          >
             <div className="flex items-center border border-gray-300 bg-white/70 rounded-xl overflow-hidden shadow-sm">
               <span className="px-3 text-gray-400">👤</span>
               <input
@@ -201,16 +219,18 @@ const Signup = () => {
               >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-                  <option value="male">Strictly Male</option>
+                <option value="male">Strictly Male</option>
                 <option value="female">Strictly Female</option>
                 <option value="Agender">Agender</option>
                 <option value="Bigender">Bigender</option>
-                <option value="Cisgender">Cisgender</option> 
+                <option value="Cisgender">Cisgender</option>
                 <option value="Genderflux">Genderflux</option>
                 <option value="Pangender">Pangender</option>
                 <option value="Polygender">Polygender</option>
                 <option value="Two-spirit">Two-spirit</option>
-                <option value="Born and taken care by an helicopter">Born and taken care by an helicopter</option>
+                <option value="Born and taken care by an helicopter">
+                  Born and taken care by an helicopter
+                </option>
                 <option value="Androgyne">Androgyne</option>
                 <option value="Asexual">Asexual</option>
                 <option value="Aromantic">Aromantic</option>
@@ -249,19 +269,29 @@ const Signup = () => {
               />
             </div>
 
-            <button type="submit" className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300">
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300"
+            >
               Sign Up
             </button>
           </form>
 
           <p className="mt-6 text-sm text-center text-gray-600">
             Already have an account?{" "}
-            <span onClick={() => navigate("/login")} className="text-gray-800 font-medium cursor-pointer hover:underline">
+            <span
+              onClick={() => navigate("/login")}
+              className="text-gray-800 font-medium cursor-pointer hover:underline"
+            >
               Login
             </span>
           </p>
 
-          <img src={sticker1} alt="floating" className="absolute -top-3 -right-3 w-10 animate-spin" />
+          <img
+            src={sticker1}
+            alt="floating"
+            className="absolute -top-3 -right-3 w-10 animate-spin"
+          />
         </div>
       </div>
     </div>

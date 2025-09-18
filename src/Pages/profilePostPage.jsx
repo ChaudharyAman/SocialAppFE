@@ -148,15 +148,14 @@ const ProfilePostPage = () => {
     setLoadingFriends(false);
   };
 
-const handleRemoveFriend = (username) => {
-  const confirmDelete = window.confirm(
-    `Are you sure you want to remove @${username} from your friends?`
-  );
-  if (!confirmDelete) return;
-  dispatch(removeFriend(username));
-  setFriends((prev) => prev.filter((f) => f.username !== username));
-};
-
+  const handleRemoveFriend = (username) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to remove @${username} from your friends?`
+    );
+    if (!confirmDelete) return;
+    dispatch(removeFriend(username));
+    setFriends((prev) => prev.filter((f) => f.username !== username));
+  };
 
   if (status === "loading")
     return <p className="text-center mt-20">Loading...</p>;

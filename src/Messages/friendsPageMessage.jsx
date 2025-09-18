@@ -61,7 +61,9 @@ const FriendsPage = () => {
   const friendsToShow = query.trim()
     ? searchResults
     : recentChats
-        .map((chat) => (chat.sender.id === user.id ? chat.receiver : chat.sender))
+        .map((chat) =>
+          chat.sender.id === user.id ? chat.receiver : chat.sender
+        )
         .filter(
           (f, idx, arr) => f && arr.findIndex((a) => a.id === f.id) === idx
         );

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { fetchLikes } from "../Redux/Slices/likeSlice";
 import "./customCss.css";
 
-
 const LikesModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
   const { likesByPost, status } = useSelector((state) => state.likes);

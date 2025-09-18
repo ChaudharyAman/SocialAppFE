@@ -1,20 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
 import loginLogo from "../Logo/undraw_enter_nwx3.svg";
-import heroLogo from "../Logo/undraw_login_weas.svg"; 
+import heroLogo from "../Logo/undraw_login_weas.svg";
 import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
 import sticker2 from "../Logo/undraw_cool-break_cipj.svg";
 import { useNavigate } from "react-router-dom";
 
-
 function Login() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -110,9 +107,10 @@ function Login() {
             </button>
           </form>
 
-          <p 
-          onClick={() => navigate(`/signUp`)}
-          className="mt-6 text-sm text-center text-gray-600">
+          <p
+            onClick={() => navigate(`/signUp`)}
+            className="mt-6 text-sm text-center text-gray-600"
+          >
             Don’t have an account?{" "}
             <span className="text-gray-800 font-medium cursor-pointer hover:underline">
               Sign up

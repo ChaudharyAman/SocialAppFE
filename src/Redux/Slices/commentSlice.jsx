@@ -9,14 +9,16 @@ export const fetchComments = createAsyncThunk(
         `http://localhost:3000/api/v1/comments/${postId}`,
         { withCredentials: true }
       );
-      return { postId, comments: res.data.Comments, count: res.data.commentCount };
-    } 
-    catch (err) {
+      return {
+        postId,
+        comments: res.data.Comments,
+        count: res.data.commentCount,
+      };
+    } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
-
 
 export const createComment = createAsyncThunk(
   "comments/createComment",
@@ -28,13 +30,11 @@ export const createComment = createAsyncThunk(
         { withCredentials: true }
       );
       return { postId, comment: res.data.comment };
-    } 
-    catch (err) {
+    } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
-
 
 export const deleteComment = createAsyncThunk(
   "comments/deleteComment",
@@ -45,13 +45,11 @@ export const deleteComment = createAsyncThunk(
         withCredentials: true,
       });
       return { postId, commentId };
-    } 
-    catch (err) {
+    } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
-
 
 const commentSlice = createSlice({
   name: "comments",

@@ -2,14 +2,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa"
+import { FaUserCircle } from "react-icons/fa";
 
 const ProfileCard = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  
-  const { data: loggedInUser, status, error } = useSelector((state) => state.loggedInUser);
+
+  const {
+    data: loggedInUser,
+    status,
+    error,
+  } = useSelector((state) => state.loggedInUser);
 
   useEffect(() => {
     if (!loggedInUser && status === "idle") {
@@ -17,8 +21,7 @@ const ProfileCard = () => {
     }
   }, [dispatch, loggedInUser, status]);
 
-  if (status === "loading") 
-    return <p className="text-center">Loading...</p>;
+  if (status === "loading") return <p className="text-center">Loading...</p>;
   if (status === "failed")
     return <p className="text-center text-red-500">Error: {error}</p>;
   if (!loggedInUser) return null;
@@ -35,7 +38,6 @@ const ProfileCard = () => {
           <img
             src={loggedInUser.media_url}
             alt="profile"
-            
             className="w-20 h-20 rounded-full border-4 border-white shadow-md object-cover"
           />
         </div>
@@ -46,8 +48,11 @@ const ProfileCard = () => {
           {loggedInUser.first_name} {loggedInUser.last_name}
         </h2>
         <p
-        onClick={() => navigate(`/profile`)} 
-        className="text-sm text-gray-500 hover:text-gray-700 hover:font-semibold cursor-pointer">@{loggedInUser.username}</p>
+          onClick={() => navigate(`/profile`)}
+          className="text-sm text-gray-500 hover:text-gray-700 hover:font-semibold cursor-pointer"
+        >
+          @{loggedInUser.username}
+        </p>
         <p className="text-sm text-gray-600 mt-2">{loggedInUser.bio}</p>
 
         <div className="flex justify-around mt-4 text-gray-700">

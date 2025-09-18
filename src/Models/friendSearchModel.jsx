@@ -17,13 +17,12 @@ const SearchModal = ({ isOpen, onClose }) => {
     if (value.trim().length > 0) {
       try {
         const res = await axios.get(`${API_BASE_URL}/fetchUser/${value}`, {
-          withCredentials: true, 
+          withCredentials: true,
         });
 
-        console.log("Search response:", res.data); 
+        console.log("Search response:", res.data);
         setSearchResults(res.data.users || []);
-      } 
-      catch (error) {
+      } catch (error) {
         console.error(
           "Error fetching users:",
           error.response?.data || error.message
@@ -71,34 +70,32 @@ const SearchModal = ({ isOpen, onClose }) => {
         />
 
         <div className="max-h-60 overflow-y-auto">
-          {searchResults.length > 0 ? (
-            searchResults.slice(0, 10).map((user) => (
-              <div
-                key={user.username}
-                onClick={() => {
-                  navigate(`/user/${user.username}`);
-                  onClose();
-                  setQuery("");
-                  setSearchResults([]);
-                }}
-                className="p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3"
-              >
-                <img
-                  src={user.media_url}
-                  alt={user.username}
-                  className="w-10 h-10 rounded-full border border-gray-300 object-cover"
-                />
-                <div>
-                  <p className="font-semibold">@{user.username}</p>
-                  <p className="text-sm text-gray-600">
-                    {user.first_name} {user.last_name}
-                  </p>
+          {searchResults.length > 0
+            ? searchResults.slice(0, 10).map((user) => (
+                <div
+                  key={user.username}
+                  onClick={() => {
+                    navigate(`/user/${user.username}`);
+                    onClose();
+                    setQuery("");
+                    setSearchResults([]);
+                  }}
+                  className="p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3"
+                >
+                  <img
+                    src={user.media_url}
+                    alt={user.username}
+                    className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold">@{user.username}</p>
+                    <p className="text-sm text-gray-600">
+                      {user.first_name} {user.last_name}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            query && <p className="text-sm text-gray-500">No users found</p>
-          )}
+              ))
+            : query && <p className="text-sm text-gray-500">No users found</p>}
         </div>
 
         {searchResults.length > 10 && (
@@ -110,6 +107,5 @@ const SearchModal = ({ isOpen, onClose }) => {
     </div>
   );
 };
-
 
 export default SearchModal;

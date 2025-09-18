@@ -9,7 +9,6 @@ import { motion } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 import { Search } from "lucide-react";
 
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,14 +50,14 @@ const Dashboard = () => {
             onClick={() => navigate("/chat")}
             className="rounded-lg text-gray-600 hover:text-black cursor-pointer"
           >
-          <motion.div
+            <motion.div
               className="text-black"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
               animate={{ y: [0, -6, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <MessageSquare size ={26} />
+              <MessageSquare size={26} />
             </motion.div>
           </button>
 

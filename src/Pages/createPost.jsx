@@ -23,7 +23,7 @@ const CreatePost = () => {
 
       navigator.geolocation.getCurrentPosition(
         (pos) => resolve(pos.coords),
-        () => resolve(null), 
+        () => resolve(null),
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     });
