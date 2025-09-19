@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const fetchComments = createAsyncThunk(
   "comments/fetchComments",
   async (postId, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/v1/comments/${postId}`,
+        `${API_BASE_URL}/api/v1/comments/${postId}`,
         { withCredentials: true }
       );
       return {
@@ -25,7 +28,7 @@ export const createComment = createAsyncThunk(
   async ({ postId, text }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/createComment`,
+        `${API_BASE_URL}/api/v1/createComment`,
         { post_id: postId, text },
         { withCredentials: true }
       );
@@ -40,7 +43,7 @@ export const deleteComment = createAsyncThunk(
   "comments/deleteComment",
   async ({ commentId, postId }, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/comments`, {
+      await axios.delete(`${API_BASE_URL}/api/v1/comments`, {
         data: { id: commentId, post_id: postId },
         withCredentials: true,
       });

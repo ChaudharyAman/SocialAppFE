@@ -11,6 +11,9 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setMedia(file);
@@ -53,7 +56,7 @@ const CreatePost = () => {
       }
 
       const res = await axios.post(
-        "http://localhost:3000/api/v1/createPost",
+        `${API_BASE_URL}/api/v1/createPost`,
         formData,
         {
           withCredentials: true,

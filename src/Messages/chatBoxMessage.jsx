@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaSmile } from "react-icons/fa";
 
-const socket = io("http://localhost:3000", { withCredentials: true });
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
+const socket = io(`${API_BASE_URL}`, { withCredentials: true });
 
 const ChatBox = ({ friend }) => {
   const user = useSelector((state) => state.loggedInUser.data);
@@ -14,7 +17,7 @@ const ChatBox = ({ friend }) => {
   const [hasMore, setHasMore] = useState(true);
   const isFetching = useRef(false);
   const chatContainerRef = useRef(null);
-
+  
   if (!user) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-500">
@@ -38,7 +41,7 @@ const ChatBox = ({ friend }) => {
     isFetching.current = true;
 
     try {
-      let url = `http://localhost:3000/api/v1/history/${friend.id}?limit=20`;
+      let url = `${API_BASE_URL}/api/v1/history/${friend.id}?limit=20`;
       if (beforeTimestamp) url += `&beforeTimestamp=${beforeTimestamp}`;
 
       const res = await axios.get(url, { withCredentials: true });
@@ -112,7 +115,7 @@ const ChatBox = ({ friend }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/message/${friend.id}`,
+        `${API_BASE_URL}/api/v1/message/${friend.id}`,
         { message: newMsg },
         { withCredentials: true }
       );
@@ -134,7 +137,6 @@ const ChatBox = ({ friend }) => {
 
   return (
     <div className="flex flex-col h-full border-l border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100">
-      {/* Header */}
       <div className="p-4 flex items-center gap-3 bg-white/70 backdrop-blur-md shadow-sm border-b">
         <img
           src={friend.media_url}
@@ -146,7 +148,6 @@ const ChatBox = ({ friend }) => {
         </div>
       </div>
 
-      {/* Messages */}
       <div
         ref={chatContainerRef}
         onScroll={handleScroll}
@@ -208,11 +209,7 @@ const ChatBox = ({ friend }) => {
         )}
       </div>
 
-      {/* Input */}
       <div className="p-3 flex items-center gap-2 border-t bg-white/80 backdrop-blur-md">
-        <button className="text-gray-500 hover:text-gray-700">
-          <FaSmile size={20} />
-        </button>
         <input
           value={newMsg}
           onChange={(e) => setNewMsg(e.target.value)}

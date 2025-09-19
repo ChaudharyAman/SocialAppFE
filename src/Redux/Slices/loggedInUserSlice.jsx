@@ -13,7 +13,7 @@ export const fetchLoggedinUser = createAsyncThunk(
   "user/fetchLoggedin",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/me`, {
+      const response = await axios.get(`${API_BASE_URL}/api/v1/me`, {
         withCredentials: true,
       });
       return response.data.user;

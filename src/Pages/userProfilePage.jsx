@@ -50,7 +50,7 @@ const UserProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/user/${username}`, {
+        const res = await axios.get(`${API_BASE_URL}/api/v1/user/${username}`, {
           withCredentials: true,
         });
         setUser(res.data.user[0]);
@@ -75,7 +75,7 @@ const UserProfilePage = () => {
 
   const fetchFriendsList = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/friends/${username}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/v1/friends/${username}`, {
         withCredentials: true,
       });
       setFriends(res.data.friends || []);

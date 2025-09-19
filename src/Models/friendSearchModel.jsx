@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 
 const SearchModal = ({ isOpen, onClose }) => {
+  
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [query, setQuery] = useState("");
@@ -16,7 +17,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
     if (value.trim().length > 0) {
       try {
-        const res = await axios.get(`${API_BASE_URL}/fetchUser/${value}`, {
+        const res = await axios.get(`${API_BASE_URL}/api/v1/fetchUser/${value}`, {
           withCredentials: true,
         });
 

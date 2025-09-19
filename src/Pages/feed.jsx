@@ -27,6 +27,7 @@ const Feed = () => {
   const [playingVideo, setPlayingVideo] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Feed = () => {
 
     try {
       const res = await axios.get(
-        `${API_BASE_URL}/feed?page=${page + 1}&limit=5`,
+        `${API_BASE_URL}/api/v1/feed?page=${page + 1}&limit=5`,
         { withCredentials: true }
       );
 

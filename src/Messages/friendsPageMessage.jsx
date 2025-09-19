@@ -5,6 +5,7 @@ import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import axios from "axios";
 import { FaComments, FaTimes, FaUserFriends, FaSearch } from "react-icons/fa";
 
+
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const { data: user, status } = useSelector((state) => state.loggedInUser);
@@ -14,6 +15,9 @@ const FriendsPage = () => {
   const [allFriends, setAllFriends] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     if (status === "idle") dispatch(fetchLoggedinUser());
   }, [dispatch, status]);
@@ -22,14 +26,14 @@ const FriendsPage = () => {
     if (!user?.id) return;
 
     axios
-      .get(`http://localhost:3000/api/v1/me`, { withCredentials: true })
+      .get(`${API_BASE_URL}/api/v1/me`, { withCredentials: true })
       .then((res) => {
         if (res.data.success) setAllFriends(res.data.user.friends);
       })
       .catch((err) => console.error("Error fetching friends:", err));
 
     axios
-      .get(`http://localhost:3000/api/v1/recentChats`, {
+      .get(`${API_BASE_URL}/api/v1/recentChats`, {
         withCredentials: true,
       })
       .then((res) => {

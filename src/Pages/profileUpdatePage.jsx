@@ -21,6 +21,8 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
     (state) => state.loggedInUser
   );
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [formData, setFormData] = useState({
     username: "",
     first_name: "",
@@ -80,7 +82,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
         if (formData[key]) form.append(key, formData[key]);
       }
 
-      await axios.put("http://localhost:3000/api/v1/updateProfile", form, {
+      await axios.put(`${API_BASE_URL}/api/v1/updateProfile`, form, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

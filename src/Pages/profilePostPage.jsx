@@ -18,6 +18,8 @@ const ProfilePostPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const {
     data: loggedInUser,
     status,
@@ -74,7 +76,7 @@ const ProfilePostPage = () => {
 
   const fetchFriendsList = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/friends", {
+      const res = await axios.get(`${API_BASE_URL}/api/v1/friends`, {
         withCredentials: true,
       });
       return res.data.friends || [];
@@ -92,7 +94,7 @@ const ProfilePostPage = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/v1/logoutUser",
+        `${API_BASE_URL}/api/v1/logoutUser`,
         {},
         { withCredentials: true }
       );

@@ -21,6 +21,8 @@ const Signup = () => {
     media: null,
   });
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -51,7 +53,7 @@ const Signup = () => {
       });
 
       const res = await axios.post(
-        "http://localhost:3000/api/v1/createUser2",
+        `${API_BASE_URL}/api/v1/createUser2`,
         data,
         {
           withCredentials: true,
@@ -68,7 +70,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200">
+    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200">
       <div className="flex w-[1000px] bg-gray-400/30 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
         <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-gray-50 to-gray-200 text-gray-700 p-8 relative">
           <img src={heroLogo} alt="hero" className="w-64 mb-6 drop-shadow-lg" />

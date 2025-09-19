@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
-import { FaUser, FaHome, FaSearch } from "react-icons/fa";
+import { FaUser, FaHome } from "react-icons/fa";
 import logo from "../Logo/noBackgroundIcon.png";
 import SearchModal from "../Models/friendSearchModel";
 import { motion } from "framer-motion";
-import { MessageSquare } from "lucide-react";
-import { Search } from "lucide-react";
+import { MessageSquare, Search } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,19 +20,19 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <div className="justify-center bg-white items-center">
-      <nav className="flex justify-between items-center pb-0 mb-0 pl-2 pr-5 bg-white shadow-md">
+    <div className="bg-white min-h-screen flex flex-col">
+      <nav className="flex justify-between items-center px-6 bg-white shadow-md">
         <div
-          className="flex items-center cursor-pointer"
+          className=" p-0 m-0 flex items-center cursor-pointer"
           onClick={() => navigate("/feed")}
         >
-          <img src={logo} alt="Logo" className="h-17 w-auto" />
+          <img src={logo} alt="Logo" className="h-18 w-19" />
         </div>
 
-        <div className="flex gap-15 items-center">
+        <div className="flex items-center gap-15">
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="rounded-lg text-gray-600 hover:text-black cursor-pointer"
+            className="text-gray-600 hover:text-black transition-colors"
           >
             <motion.div
               className="text-black"
@@ -42,13 +41,13 @@ const Dashboard = () => {
               animate={{ rotate: [0, -10, 0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
             >
-              <Search size={26} strokeWidth={2} />
+              <Search size={24} strokeWidth={2} />
             </motion.div>
           </button>
 
           <button
             onClick={() => navigate("/chat")}
-            className="rounded-lg text-gray-600 hover:text-black cursor-pointer"
+            className="text-gray-600 hover:text-black transition-colors"
           >
             <motion.div
               className="text-black"
@@ -57,29 +56,33 @@ const Dashboard = () => {
               animate={{ y: [0, -6, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <MessageSquare size={26} />
+              <MessageSquare size={24} />
             </motion.div>
           </button>
 
           {location.pathname === "/feed" ? (
             <button
               onClick={() => navigate("/profile")}
-              className="gap-2 px-5 py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 shadow hover:bg-red-600 hover:text-white transition-all"
             >
-              <FaUser size={22} />
-              Profile
+              <FaUser size={20} />
+              <span className="font-medium">Profile</span>
             </button>
           ) : (
             <button
               onClick={() => navigate("/feed")}
-              className="gap-2 px-5 py-2 flex items-center bg-gray-100 text-gray-600 rounded-lg shadow hover:bg-gray-600/90 hover:text-white transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-600 shadow hover:bg-gray-600 hover:text-white transition-all"
             >
-              <FaHome size={22} />
-              Home
+              <FaHome size={20} />
+              <span className="font-medium">Home</span>
             </button>
           )}
         </div>
       </nav>
+
+      <main className="flex-1 p-4 overflow-y-auto">
+        <Outlet />
+      </main>
 
       <SearchModal
         isOpen={isSearchOpen}

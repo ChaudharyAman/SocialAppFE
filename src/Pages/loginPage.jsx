@@ -13,13 +13,15 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/loginUser",
+        `${API_BASE_URL}/api/v1/loginUser`,
         { username: username.trim(), password },
         { withCredentials: true }
       );
