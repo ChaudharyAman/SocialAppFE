@@ -13,6 +13,8 @@ import CreatePost from "./Pages/createPost";
 import FriendsPage from "./Messages/friendsPageMessage";
 import PrivateRoute from "./Components/privateRoute";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+
+
   function App() {
   return (
     <BrowserRouter>
