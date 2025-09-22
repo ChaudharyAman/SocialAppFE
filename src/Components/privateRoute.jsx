@@ -6,7 +6,6 @@ const PrivateRoute = () => {
   const [auth, setAuth] = useState(null);
 
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  console.log("function me aya")
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -16,7 +15,10 @@ const PrivateRoute = () => {
         const res = await axios.get(`${API_BASE_URL}/api/v1/checkAuth`, {
           withCredentials: true,
         });     
+        console.log("set ke uppar me aya")
+        console.log("resu :: ", res)
         setAuth(res?.data?.success);
+        console.log("set ke niche me aya")
       } catch {
         console.log("catch me aya")
         setAuth(false);
