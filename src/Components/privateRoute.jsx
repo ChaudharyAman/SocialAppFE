@@ -12,13 +12,8 @@ const PrivateRoute = () => {
       console.log("useEffect me aya")
       try {
         console.log("try me aya")
-        // Get token from cookies
-        const getCookie = (name) => {
-          const value = `; ${document.cookie}`;
-          const parts = value.split(`; ${name}=`);
-          if (parts.length === 2) return parts.pop().split(';').shift();
-        };
-        const token = getCookie("token");
+        // Get token from localStorage
+        const token = localStorage.getItem("token");
         console.log("token: ", token)
         const res = await axios.get(`${API_BASE_URL}/api/v1/checkAuth`, {
           withCredentials: true,

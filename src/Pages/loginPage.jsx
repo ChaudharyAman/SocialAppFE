@@ -24,9 +24,11 @@ function Login() {
         `${API_BASE_URL}/api/v1/loginUser`,
         { username: username.trim(), password },
         { withCredentials: true }
-      );
-
+      )
+      
       if (res.data.success) {
+        let token = res?.token;
+        localStorage.setItem('token', token);
         navigate("/feed");
       }
     } catch (err) {
