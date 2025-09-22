@@ -12,10 +12,11 @@ import Signup from "./Pages/signUpPage";
 import CreatePost from "./Pages/createPost";
 import FriendsPage from "./Messages/friendsPageMessage";
 import PrivateRoute from "./Components/privateRoute";
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
   function App() {
   return (
     <BrowserRouter>
+      <SpeedInsights/>
       <Suspense fallback={<p>Loading...</p>}>
         <Routes>
           <Route path="/login" element={<Login />} />
