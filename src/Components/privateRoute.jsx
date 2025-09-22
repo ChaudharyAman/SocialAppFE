@@ -11,9 +11,9 @@ const PrivateRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/v1/checkAuth`, {
+        const res = await axios.get(`${API_BASE_URL}/api/v1/checkAuth`, {} , {
           withCredentials: true,
-        });
+        });     
         setAuth(res.data.success);
       } catch {
         setAuth(false);

@@ -114,7 +114,7 @@ const Signup = () => {
 
           <form
             onSubmit={handleSignup}
-            className="space-y-3 max-h-[65vh] overflow-y-auto pr-2"
+            className="space-y-3 max-h-[65vh] overflow-x-hidden overflow-y-auto pr-2"
           >
             <div className="flex items-center border border-gray-300 bg-white/70 rounded-xl overflow-hidden shadow-sm">
               <span className="px-3 text-gray-400">👤</span>
