@@ -25,8 +25,8 @@ function Login() {
         { username: username.trim(), password },
         { withCredentials: true }
       )
-      
-      if (res.data.success) {
+      console.log("resuda :: ",res)
+      if (res?.data?.success) {
         let token = res?.token;
         localStorage.setItem('token', token);
         navigate("/feed");
