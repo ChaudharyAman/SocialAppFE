@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../Api/api";
 
 const PrivateRoute = () => {
   const [auth, setAuth] = useState(null);
@@ -15,7 +15,7 @@ const PrivateRoute = () => {
         // Get token from localStorage
         const token = localStorage.getItem("token");
         console.log("token: ", token)
-        const res = await axios.get(`${API_BASE_URL}/api/v1/checkAuth`, {
+        const res = await api.get(`${API_BASE_URL}/api/v1/checkAuth`, {
           withCredentials: true,
           headers: {
             Authorization: token ? `Bearer ${token}` : undefined,

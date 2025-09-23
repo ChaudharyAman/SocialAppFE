@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../Api/api";
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -7,7 +7,7 @@ export const fetchUsers = createAsyncThunk(
   "friends/fetchUsers",
   async ({ page = 1, limit = 10 }, { rejectWithValue }) => {
     try {
-      const res = await axios.get(
+      const res = await api.get(
         `${API_BASE_URL}/api/v1/users?page=${page}&limit=${limit}`,
         { withCredentials: true }
       );
@@ -24,7 +24,7 @@ export const fetchSentRequests = createAsyncThunk(
   "friends/fetchSentRequests",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/v1/requestSent`, {
+      const res = await api.get(`${API_BASE_URL}/api/v1/requestSent`, {
         withCredentials: true,
       });
       return res.data.requests;
@@ -40,7 +40,7 @@ export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
   async (username, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/sendRequest/${username}`,
         {},
         { withCredentials: true }
@@ -62,7 +62,7 @@ export const cancelFriendRequest = createAsyncThunk(
   "friends/cancelFriendRequest",
   async (username, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(
+      const res = await api.delete(
         `${API_BASE_URL}/api/v1/cancelRequest/${username}`,
         { withCredentials: true }
       );
@@ -79,7 +79,7 @@ export const removeFriend = createAsyncThunk(
   "friends/removeFriend",
   async (username, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(
+      const res = await api.delete(
         `${API_BASE_URL}/api/v1/removeFriend/${username}`,
         { withCredentials: true }
       );
@@ -96,7 +96,7 @@ export const fetchFriends = createAsyncThunk(
   "friends/fetchFriends",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/v1/friends`, {
+      const res = await api.get(`${API_BASE_URL}/api/v1/friends`, {
         withCredentials: true,
       });
       return res.data.friends;
@@ -110,7 +110,7 @@ export const fetchPendingRequests = createAsyncThunk(
   "friends/fetchPendingRequests",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(
+      const res = await api.get(
         `${API_BASE_URL}/api/v1/pendingRequests`,
         { withCredentials: true }
       );
@@ -127,7 +127,7 @@ export const acceptFriendRequest = createAsyncThunk(
   "friends/acceptFriendRequest",
   async (username, { rejectWithValue }) => {
     try {
-      const res = await axios.put(
+      const res = await api.put(
         `${API_BASE_URL}/api/v1/acceptRequest/${username}`,
         {},
         { withCredentials: true }

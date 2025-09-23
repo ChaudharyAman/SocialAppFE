@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
-import axios from "axios";
+import api from "../Api/api";
 
 const SearchModal = ({ isOpen, onClose }) => {
   
@@ -17,7 +17,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
     if (value.trim().length > 0) {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/v1/fetchUser/${value}`, {
+        const res = await api.get(`${API_BASE_URL}/api/v1/fetchUser/${value}`, {
           withCredentials: true,
         });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../Api/api";
 import loginLogo from "../Logo/undraw_enter_nwx3.svg";
 import heroLogo from "../Logo/undraw_login_weas.svg";
 import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
@@ -20,7 +20,7 @@ function Login() {
     setError("");
 
     try {
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/loginUser`,
         { username: username.trim(), password },
         { withCredentials: true }

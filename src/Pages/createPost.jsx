@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../Api/api";
 import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
@@ -55,7 +55,7 @@ const CreatePost = () => {
         formData.append("longitude", longitude);
       }
 
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/createPost`,
         formData,
         {

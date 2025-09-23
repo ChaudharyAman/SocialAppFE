@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaThumbsUp, FaRegCommentAlt } from "react-icons/fa";
-import axios from "axios";
+import api from "../Api/api";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLikes, toggleLike } from "../Redux/Slices/likeSlice";
 import { createComment, fetchComments } from "../Redux/Slices/commentSlice";
@@ -43,7 +43,7 @@ const Feed = () => {
     setLoading(true);
 
     try {
-      const res = await axios.get(
+      const res = await api.get(
         `${API_BASE_URL}/api/v1/feed?page=${page + 1}&limit=5`,
         { withCredentials: true }
       );

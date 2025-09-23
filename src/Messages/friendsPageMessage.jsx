@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ChatBox from "./chatBoxMessage";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
-import axios from "axios";
+import api from "../Api/api";
 import { FaComments, FaTimes, FaUserFriends, FaSearch } from "react-icons/fa";
 
 
