@@ -25,14 +25,14 @@ const FriendsPage = () => {
   useEffect(() => {
     if (!user?.id) return;
 
-    axios
+    api
       .get(`${API_BASE_URL}/api/v1/me`, { withCredentials: true })
       .then((res) => {
         if (res.data.success) setAllFriends(res.data.user.friends);
       })
       .catch((err) => console.error("Error fetching friends:", err));
 
-    axios
+    api
       .get(`${API_BASE_URL}/api/v1/recentChats`, {
         withCredentials: true,
       })
