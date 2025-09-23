@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaRegEdit, FaThumbsUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegSmile } from "react-icons/fa";
-import axios from "axios";
+import api from "../Api/api";
 import ProfileNavbar from "../Models/profileNavbar";
 import ProfileUpdateModal from "./profileUpdatePage";
 import LikesModal from "../Models/likeModel";
@@ -76,7 +76,7 @@ const ProfilePostPage = () => {
 
   const fetchFriendsList = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/v1/friends`, {
+      const res = await api.get(`${API_BASE_URL}/api/v1/friends`, {
         withCredentials: true,
       });
       return res.data.friends || [];
@@ -93,7 +93,7 @@ const ProfilePostPage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
+      await api.post(
         `${API_BASE_URL}/api/v1/logoutUser`,
         {},
         { withCredentials: true }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
-import axios from "axios";
+import api from "../Api/api";
 import {
   FaUserEdit,
   FaTimes,
@@ -82,7 +82,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
         if (formData[key]) form.append(key, formData[key]);
       }
 
-      await axios.put(`${API_BASE_URL}/api/v1/updateProfile`, form, {
+      await api.put(`${API_BASE_URL}/api/v1/updateProfile`, form, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

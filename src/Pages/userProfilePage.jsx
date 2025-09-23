@@ -11,7 +11,7 @@ import {
 } from "../Redux/Slices/friendSlice";
 import { fetchLikes, toggleLike } from "../Redux/Slices/likeSlice";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
-import axios from "axios";
+import api from "../Api/api";
 import {
   FaUserPlus,
   FaUserTimes,
@@ -50,7 +50,7 @@ const UserProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/v1/user/${username}`, {
+        const res = await api.get(`${API_BASE_URL}/api/v1/user/${username}`, {
           withCredentials: true,
         });
         setUser(res.data.user[0]);
@@ -75,7 +75,7 @@ const UserProfilePage = () => {
 
   const fetchFriendsList = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/v1/friends/${username}`, {
+      const res = await api.get(`${API_BASE_URL}/api/v1/friends/${username}`, {
         withCredentials: true,
       });
       setFriends(res.data.friends || []);

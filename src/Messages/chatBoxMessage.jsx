@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import api from "../Api/api";
 import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
@@ -44,7 +44,7 @@ const ChatBox = ({ friend }) => {
       let url = `${API_BASE_URL}/api/v1/history/${friend.id}?limit=20`;
       if (beforeTimestamp) url += `&beforeTimestamp=${beforeTimestamp}`;
 
-      const res = await axios.get(url, { withCredentials: true });
+      const res = await api.get(url, { withCredentials: true });
       const newMessages = res.data.messages;
 
       if (newMessages.length === 0) {
@@ -114,7 +114,7 @@ const ChatBox = ({ friend }) => {
     if (!newMsg.trim()) return;
 
     try {
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/message/${friend.id}`,
         { message: newMsg },
         { withCredentials: true }

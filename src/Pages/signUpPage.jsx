@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../Api/api";
 import loginLogo from "../Logo/undraw_enter_nwx3.svg";
 import heroLogo from "../Logo/undraw_login_weas.svg";
 import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
@@ -52,7 +52,7 @@ const Signup = () => {
         }
       });
 
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/createUser2`,
         data,
         {

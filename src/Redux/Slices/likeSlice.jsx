@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../Api/api.js";
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -7,7 +7,7 @@ export const fetchLikes = createAsyncThunk(
   "likes/fetchLikes",
   async (postId, { rejectWithValue }) => {
     try {
-      const res = await axios.get(
+      const res = await api.get(
         `${API_BASE_URL}/api/v1/likes/${postId}`,
         { withCredentials: true }
       );
@@ -26,7 +26,7 @@ export const toggleLike = createAsyncThunk(
   "likes/toggleLike",
   async (postId, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
+      const res = await api.post(
         `${API_BASE_URL}/api/v1/like/${postId}`,
         {},
         { withCredentials: true }
