@@ -24,12 +24,13 @@ function Login() {
         `${API_BASE_URL}/api/v1/loginUser`,
         { username: username.trim(), password },
         { withCredentials: true }
-      )
-      console.log("resuda :: ",res)
-      if (res?.data?.success) {
-        let token = res?.token;
-        localStorage.setItem('token', token);
+      );
+      console.log("resuda :: ", res);
+      if (res?.data?.success && res?.data?.token) {
+        localStorage.setItem('token', res.data.token);
         navigate("/feed");
+      } else {
+        setError("Login failed: No token received");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
