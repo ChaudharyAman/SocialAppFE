@@ -5,7 +5,6 @@ import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import api from "../Api/api";
 import { FaComments, FaTimes, FaUserFriends, FaSearch } from "react-icons/fa";
 
-
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const { data: user, status } = useSelector((state) => state.loggedInUser);
@@ -14,7 +13,6 @@ const FriendsPage = () => {
   const [recentChats, setRecentChats] = useState([]);
   const [allFriends, setAllFriends] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -33,9 +31,7 @@ const FriendsPage = () => {
       .catch((err) => console.error("Error fetching friends:", err));
 
     api
-      .get(`${API_BASE_URL}/api/v1/recentChats`, {
-        withCredentials: true,
-      })
+      .get(`${API_BASE_URL}/api/v1/recentChats`, { withCredentials: true })
       .then((res) => {
         if (res.data.success) setRecentChats(res.data.recentChats);
       })
@@ -62,24 +58,32 @@ const FriendsPage = () => {
     );
   }
 
+  const getFriendsSortedByRecentChat = (chats, myId) => {
+    const map = new Map();
+    chats.forEach((chat) => {
+      const friend = chat.senderId === myId ? chat.receiver : chat.sender;
+      if (
+        !map.has(friend.id) ||
+        new Date(chat.timestamp) > new Date(map.get(friend.id).timestamp)
+      ) {
+        map.set(friend.id, { ...friend, timestamp: chat.timestamp });
+      }
+    });
+    return Array.from(map.values()).sort(
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+    );
+  };
+
   const friendsToShow = query.trim()
     ? searchResults
-    : recentChats
-        .map((chat) =>
-          chat.sender.id === user.id ? chat.receiver : chat.sender
-        )
-        .filter(
-          (f, idx, arr) => f && arr.findIndex((a) => a.id === f.id) === idx
-        );
+    : getFriendsSortedByRecentChat(recentChats, user.id);
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
       <div className="w-1/3 border-r border-gray-300 backdrop-blur-lg bg-white/80 shadow-lg flex flex-col">
         <div className="p-5 border-b border-gray-300 flex items-center gap-3">
           <FaUserFriends className="text-gray-700 text-2xl" />
-          <h2 className="font-bold text-2xl text-gray-800 tracking-wide">
-            Chats
-          </h2>
+          <h2 className="font-bold text-2xl text-gray-800 tracking-wide">Chats</h2>
         </div>
 
         <div className="p-4 relative">
@@ -104,9 +108,7 @@ const FriendsPage = () => {
         <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">
           {friendsToShow.length === 0 ? (
             <p className="text-gray-400 text-center mt-10 text-sm italic">
-              {query.trim()
-                ? "No matching friends found"
-                : "No recent chats yet"}
+              {query.trim() ? "No matching friends found" : "No recent chats yet"}
             </p>
           ) : (
             friendsToShow.map((f) => (
