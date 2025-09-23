@@ -9,7 +9,7 @@ api.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       console.log(config)
-      config.headers.Authorization = `Bearer ${token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
