@@ -27,7 +27,7 @@ const Feed = () => {
   const [playingVideo, setPlayingVideo] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  
+
   const loggedInUser = useSelector((state) => state.loggedInUser.data);
 
   const dispatch = useDispatch();

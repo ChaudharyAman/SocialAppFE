@@ -9,9 +9,6 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      return window.location.href("/login");
-    }
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -25,7 +22,8 @@ api.interceptors.response.use(
   (response) => {
     if (response.data.statusCode === 419) {
       localStorage.removeItem("token");
-      return (window.location.href = "/login");
+      window.location.href = "/login";
+      return Promise.reject({ message: "Session expired" });
     }
     return response;
   },
