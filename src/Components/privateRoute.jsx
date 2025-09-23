@@ -9,19 +9,13 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      console.log("useEffect me aya")
       try {
-        console.log("try me aya")
         const res = await api.get(`${API_BASE_URL}/api/v1/checkAuth`, {
           withCredentials: true,
         });
-        console.log("set ke uppar me aya")
-        console.log("res :: ", res)
         setAuth(res?.data?.success);
-        console.log("set ke niche me aya")
       } 
       catch {
-        console.log("catch me aya")
         setAuth(false);
       }
     };

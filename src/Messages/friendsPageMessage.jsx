@@ -69,6 +69,7 @@ const FriendsPage = () => {
         map.set(friend.id, { ...friend, timestamp: chat.timestamp });
       }
     });
+    
     return Array.from(map.values()).sort(
       (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
     );
