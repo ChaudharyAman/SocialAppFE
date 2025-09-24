@@ -55,7 +55,7 @@ Build SocialAppFE from the source and install dependencies:
 
 2. **Navigate to the project directory:**
    ```bash
-   cd socialappfe
+   cd SocialAppFE
    ```
 
 3. **Install the dependencies:**
