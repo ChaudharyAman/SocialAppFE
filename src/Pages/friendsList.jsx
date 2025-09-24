@@ -11,6 +11,8 @@ import {
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { FaUserPlus, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Logo/loader";
+
 
 const FriendsList = () => {
   const dispatch = useDispatch();
@@ -58,7 +60,7 @@ const FriendsList = () => {
       </h2>
 
       {loading && currentPage === 1 && (
-        <p className="text-center mt-4">Loading users...</p>
+        <p className="text-center mt-4"><Loader/></p>
       )}
       {error && <p className="text-center text-red-500 mt-4">{error}</p>}
 

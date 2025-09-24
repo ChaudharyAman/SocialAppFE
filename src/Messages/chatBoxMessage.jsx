@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaSmile } from "react-icons/fa";
+import Loader from "../Logo/loader";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -21,7 +22,7 @@ const ChatBox = ({ friend }) => {
   if (!user) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-500">
-        Loading user...
+       <Loader/>
       </div>
     );
   }

@@ -4,6 +4,8 @@ import ChatBox from "./chatBoxMessage";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import api from "../Api/api";
 import { FaComments, FaTimes, FaUserFriends, FaSearch } from "react-icons/fa";
+import Loader from "../Logo/loader";
+
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
@@ -53,7 +55,7 @@ const FriendsPage = () => {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-r from-gray-100 via-white to-gray-100 text-gray-600 text-xl font-semibold">
         <FaComments className="mr-3 text-gray-500 animate-pulse" />
-        Loading chats...
+       <Loader/>
       </div>
     );
   }

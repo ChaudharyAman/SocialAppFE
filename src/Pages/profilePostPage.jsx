@@ -13,6 +13,8 @@ import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { fetchLikes, toggleLike } from "../Redux/Slices/likeSlice";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
 import { removeFriend } from "../Redux/Slices/friendSlice";
+import Loader from "../Logo/loader";
+
 
 const ProfilePostPage = () => {
   const dispatch = useDispatch();
@@ -160,7 +162,7 @@ const ProfilePostPage = () => {
   };
 
   if (status === "loading")
-    return <p className="text-center mt-20">Loading...</p>;
+    return <p className="text-center mt-20"><Loader/></p>;
   if (status === "failed")
     return <p className="text-center mt-20 text-red-500">Error: {error}</p>;
   if (!loggedInUser) return null;
@@ -296,7 +298,7 @@ const ProfilePostPage = () => {
             </button>
             <h2 className="text-xl font-semibold mb-4">Connections</h2>
             {loadingFriends ? (
-              <p className="text-center text-gray-500">Loading...</p>
+              <p className="text-center text-gray-500"><Loader/></p>
             ) : friends.length > 0 ? (
               friends.map((f) => (
                 <div

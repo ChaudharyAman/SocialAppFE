@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchLikes } from "../Redux/Slices/likeSlice";
 import "./customCss.css";
+import Loader from "../Logo/loader";
 
 const LikesModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const LikesModal = ({ postId, onClose }) => {
         </div>
 
         {status === "loading" ? (
-          <p className="text-gray-500">Loading likes...</p>
+          <p className="text-gray-500"><Loader/></p>
         ) : (likesByPost[postId] || []).length === 0 ? (
           <p className="text-gray-500">No likes yet</p>
         ) : (

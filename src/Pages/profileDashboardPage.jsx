@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import Loader from "../Logo/loader";
 
 const ProfileCard = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ProfileCard = () => {
     }
   }, [dispatch, loggedInUser, status]);
 
-  if (status === "loading") return <p className="text-center">Loading...</p>;
+  if (status === "loading") return <p className="text-center"><Loader/></p>;
   if (status === "failed")
     return <p className="text-center text-red-500">Error: {error}</p>;
   if (!loggedInUser) return null;

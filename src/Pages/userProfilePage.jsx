@@ -23,6 +23,7 @@ import {
 } from "react-icons/fa";
 import LikesModal from "../Models/likeModel";
 import CommentsModal from "../Models/commentModel";
+import Loader from "../Logo/loader";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -181,7 +182,7 @@ const UserProfilePage = () => {
     setOpenCommentsModalFor(postId);
   };
 
-  if (loading) return <p className="text-center mt-20">Loading...</p>;
+  if (loading) return <p className="text-center mt-20"><Loader/></p>;
   if (!user) return <p className="text-center mt-20">User not found</p>;
 
   return (

@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchComments, createComment } from "../Redux/Slices/commentSlice";
 import "./customCss.css";
-
+import Loader from "../Logo/loader";
 
 const CommentsModal = ({ postId, onClose }) => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const CommentsModal = ({ postId, onClose }) => {
         </form>
 
         {status === "loading" ? (
-          <p className="text-gray-500">Loading comments...</p>
+          <p className="text-gray-500"><Loader/></p>
         ) : (commentsByPost[postId] || []).length === 0 ? (
           <p className="text-gray-500">No comments yet</p>
         ) : (

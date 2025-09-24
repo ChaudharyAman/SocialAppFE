@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import api from "../Api/api";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Logo/loader";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -117,7 +118,7 @@ const CreatePost = () => {
           disabled={loading}
           className="w-full py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50"
         >
-          {loading ? "Posting..." : "Post"}
+          {loading ? <Loader/> : "Post"}
         </button>
       </form>
     </div>

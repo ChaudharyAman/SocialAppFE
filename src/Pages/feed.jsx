@@ -10,6 +10,7 @@ import ProfileCard from "./profileDashboardPage";
 import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
 import CreatePost from "./createPost";
+import Loader from "../Logo/loader";
 
 const Feed = () => {
   const navigate = useNavigate();
@@ -286,7 +287,7 @@ const Feed = () => {
             );
           })}
 
-          {loading && <p className="text-gray-500">Loading more posts...</p>}
+          {loading && <p className="text-gray-500"><Loader/></p>}
           {!hasMore && <p className="text-gray-500">No more posts</p>}
 
           {showLikesModal && selectedPostId && (
