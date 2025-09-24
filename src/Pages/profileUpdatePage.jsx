@@ -35,7 +35,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
     password: "",
     date_of_birth: "",
     gender: "",
-  });
+  }); 
 
   const [previewImage, setPreviewImage] = useState(null);
 
