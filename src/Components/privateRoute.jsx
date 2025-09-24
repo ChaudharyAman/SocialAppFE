@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Api/api";
+import Loader from "../Logo/loader";
 
 const PrivateRoute = () => {
   const [auth, setAuth] = useState(null);
@@ -22,7 +23,7 @@ const PrivateRoute = () => {
     checkAuth();
   }, []);
 
-  if (auth === null) return <p>Loading...</p>;
+  if (auth === null) return <p><Loader/></p>;
 
   return auth ? <Outlet /> : <Navigate to="/login" />;
 };
