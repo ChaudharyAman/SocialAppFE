@@ -78,5 +78,5 @@ npm test
 ### Crawling
 SocialApp Live Url:
 ```bash
-(https://socialapp-delta-two.vercel.app/feed)
+https://socialapp-delta-two.vercel.app/feed
 ```
