@@ -74,3 +74,9 @@ SocialAppFE uses the **Jest** test framework. Run the test suite with:
 ```bash
 npm test
 ```
+
+### Crawling
+SocialApp Live Url:
+```bash
+(https://socialapp-delta-two.vercel.app/feed)
+```
