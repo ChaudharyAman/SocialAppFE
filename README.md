@@ -50,7 +50,7 @@ Build SocialAppFE from the source and install dependencies:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Chaudharysum/Socialappfe
+   git clone https://github.com/ChaudharyAman/SocialAppFE
    ```
 
 2. **Navigate to the project directory:**
