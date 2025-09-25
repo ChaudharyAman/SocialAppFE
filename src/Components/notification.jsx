@@ -8,22 +8,19 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const socket = io(`${API_BASE_URL}`, { withCredentials: true });
 
-const NotificationProvider = ({ children }) => {
+const NotificationProvider = () => {
   const { data: user } = useSelector((state) => state.loggedInUser);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    console.log("first ")
     if (user?.id) {
-        console.log("second ")
         socket.emit("join", user.id);
     }
   }, [user?.id]);
 
   useEffect(() => {
     const handleReceiveMessage = (msg) => {
-        console.log("third" , msg)
       const sender =
         user?.friends?.find((friend) => friend.id === msg.senderId) ||
         (user?.id === msg.senderId ? user : null);
@@ -66,8 +63,6 @@ const NotificationProvider = ({ children }) => {
         </div>
       ));
         
-    // toast.success(msg.message)
-
 };
 
     socket.off("receive_message")
