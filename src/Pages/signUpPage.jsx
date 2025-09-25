@@ -24,6 +24,7 @@ const Signup = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -38,6 +39,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true)
 
     try {
       const data = new FormData();
@@ -64,8 +66,12 @@ const Signup = () => {
       if (res.data.success) {
         navigate("/login");
       }
-    } catch (err) {
+    } 
+    catch (err) {
       setError(err.response?.data?.message || "Signup failed");
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -219,10 +225,10 @@ const Signup = () => {
                 onChange={handleChange}
                 className="w-full p-3 bg-transparent focus:outline-none"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="male">Strictly Male</option>
-                <option value="female">Strictly Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Strictly Male">Strictly Male</option>
+                <option value="Strictly Female">Strictly Female</option>
                 <option value="Agender">Agender</option>
                 <option value="Bigender">Bigender</option>
                 <option value="Cisgender">Cisgender</option>
@@ -245,6 +251,7 @@ const Signup = () => {
                 <option value="Amaregender">Amaregender</option>
                 <option value="Blurgender">Blurgender</option>
                 <option value="non-binary">non-binary</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
@@ -272,10 +279,18 @@ const Signup = () => {
             </div>
 
             <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300"
+              type = "submit"
+              disabled = {loading}
+              className = { `w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300 
+                ${loading ? "opacity-70 cursor-not-allowed hover:scale-100" : "hover:scale-105"}`}
             >
-              Sign Up
+               {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  Signing in...
+                </div>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
 

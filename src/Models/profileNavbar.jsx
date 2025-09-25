@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchPendingRequests,
   acceptFriendRequest,
+  cancelFriendRequest,
 } from "../Redux/Slices/friendSlice";
 
 const ProfileNavbar = ({ onFilter }) => {
@@ -34,6 +35,12 @@ const ProfileNavbar = ({ onFilter }) => {
   const handleAccept = async (username) => {
     if (window.confirm(`Accept friend request from ${username}?`)) {
       await dispatch(acceptFriendRequest(username));
+      window.location.reload();
+    }
+  };
+  const handleCancel = async (username) => {
+    if (window.confirm(`Cancel friend request from ${username}`)) {
+      await dispatch(cancelFriendRequest(username));
       window.location.reload();
     }
   };
@@ -115,12 +122,25 @@ const ProfileNavbar = ({ onFilter }) => {
                       </p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleAccept(req.username)}
-                    className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-                  >
-                    Accept
-                  </button>
+
+                  <div className=" gap-2 flex">
+                    <div>
+                      <button
+                        onClick={() => handleCancel(req.username)}
+                        className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => handleAccept(req.username)}
+                        className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                      >
+                        Accept
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))
             )}

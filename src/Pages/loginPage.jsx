@@ -5,6 +5,8 @@ import heroLogo from "../Logo/undraw_login_weas.svg";
 import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
 import sticker2 from "../Logo/undraw_cool-break_cipj.svg";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Logo/loader";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -12,12 +14,14 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading , setLoading] = useState(false)
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true)
 
     try {
       const res = await api.post(
@@ -31,9 +35,13 @@ function Login() {
       } else {
         setError("Login failed: No token received");
       }
-    } catch (err) {
+    } 
+    catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
+    finally {
+      setLoading(false)
+    } 
   };
 
   return (
@@ -102,17 +110,24 @@ function Login() {
                 className="w-full p-3 bg-transparent focus:outline-none"
               />
             </div>
-
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transform transition-all duration-300"
+              disabled={loading}
+              className={`w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg transform transition-all duration-300
+                ${loading ? "opacity-70 cursor-not-allowed hover:scale-100" : "hover:scale-105"}
+              `}
             >
-              Login
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  Logging in...
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
-
           <p
-            onClick={() => navigate(`/signUp`)}
+            onClick={() => !loading && navigate(`/signUp`)}
             className="mt-6 text-sm text-center text-gray-600"
           >
             Don’t have an account?{" "}

@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import CreatePost from "./createPost";
 import Loader from "../Logo/loader";
 
+
+
 const Feed = () => {
   const navigate = useNavigate();
 
@@ -63,9 +65,11 @@ const Feed = () => {
           });
         }
       }
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Error fetching posts:", err);
-    } finally {
+    }
+     finally {
       setLoading(false);
     }
   };

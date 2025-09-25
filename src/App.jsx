@@ -14,11 +14,13 @@ import FriendsPage from "./Messages/friendsPageMessage";
 import PrivateRoute from "./Components/privateRoute";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import Loader from "./Logo/loader";
+import NotificationProvider from "./Components/notification";
 
 
 function App() {
   return (
     <BrowserRouter>
+    <NotificationProvider>
       <SpeedInsights/>
       <Suspense fallback={<p><Loader/></p>}>
         <Routes>
@@ -41,6 +43,7 @@ function App() {
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Suspense>
+      </NotificationProvider>
     </BrowserRouter>
   );
 }
