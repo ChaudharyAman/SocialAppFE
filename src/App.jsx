@@ -20,7 +20,7 @@ import NotificationProvider from "./Components/notification";
 function App() {
   return (
     <BrowserRouter>
-    <NotificationProvider>
+    <NotificationProvider/>
       <SpeedInsights/>
       <Suspense fallback={<p><Loader/></p>}>
         <Routes>
@@ -43,7 +43,6 @@ function App() {
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Suspense>
-      </NotificationProvider>
     </BrowserRouter>
   );
 }

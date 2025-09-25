@@ -14,13 +14,16 @@ const NotificationProvider = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log("first ")
     if (user?.id) {
-      socket.emit("join", user.id);
+        console.log("second ")
+        socket.emit("join", user.id);
     }
   }, [user?.id]);
 
   useEffect(() => {
     const handleReceiveMessage = (msg) => {
+        console.log("third" , msg)
       const sender =
         user?.friends?.find((friend) => friend.id === msg.senderId) ||
         (user?.id === msg.senderId ? user : null);
@@ -62,20 +65,24 @@ const NotificationProvider = ({ children }) => {
           </div>
         </div>
       ));
-    };
+        
+    // toast.success(msg.message)
+
+};
 
     socket.off("receive_message")
-    socket.on("receive_message", handleReceiveMessage);
+    socket.off("receive_message_notification")
+    socket.on("receive_message_notification", handleReceiveMessage);
 
     return () => {
-      socket.off("receive_message", handleReceiveMessage);
+      socket.off("receive_message_notification", handleReceiveMessage);
     };
   }, [user?.id, navigate, location.pathname]);
 
   return (
     <>
-      {children}
-      <Toaster position="top-right" className= "flex flex-row" />
+
+      <Toaster position="top-right" reverseOrder={false} className= "flex flex-row" />
     </>
   );
 };
