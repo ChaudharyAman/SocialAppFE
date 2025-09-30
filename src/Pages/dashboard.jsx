@@ -7,11 +7,14 @@ import logo from "../Logo/noBackgroundIcon.png";
 import SearchModal from "../Models/friendSearchModel";
 import { motion } from "framer-motion";
 import { MessageSquare, Search } from "lucide-react";
+import { useRef } from "react";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const mainRef = useRef(null)
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -20,6 +23,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
+    <div className="fixed inset-1 flex flex-col bg-white">
     <div className="bg-white min-h-screen flex flex-col">
       <nav className="flex justify-between items-center px-6 bg-white shadow-md">
         <div
@@ -80,14 +84,15 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      <main className="flex-1 p-4 overflow-y-auto">
-        <Outlet />
+      <main ref={mainRef} className="flex-1 p-4 overflow-y-auto">
+        <Outlet context={ {mainRef} }/>
       </main>
 
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
       />
+    </div>
     </div>
   );
 };

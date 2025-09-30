@@ -11,11 +11,13 @@ import FriendsList from "./friendsList";
 import { useNavigate } from "react-router-dom";
 import CreatePost from "./createPost";
 import Loader from "../Logo/loader";
-
+import { useOutletContext } from "react-router-dom";
 
 
 const Feed = () => {
   const navigate = useNavigate();
+
+  const {mainRef} = useOutletContext()
 
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
@@ -76,20 +78,21 @@ const Feed = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+      const container = mainRef?.current;
+      if (!container) return;
 
-  useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop + 50 >=
-        document.documentElement.scrollHeight
-      ) {
-        fetchPosts();
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [page, hasMore]);
+        container.scrollTop + container.clientHeight + 50 >=
+        container.scrollHeight
+        ) {
+          fetchPosts();
+        }
+      };
+
+        container.addEventListener("scroll", handleScroll);
+        return () => container.removeEventListener("scroll", handleScroll);
+      }, [page, hasMore, mainRef]);
 
   const handleShowLikes = (postId) => {
     setSelectedPostId(postId);
@@ -134,9 +137,11 @@ const Feed = () => {
 
   return (
     <div>
-      <div className="flex flex-row m-0">
-        <div className="bg-white mt-8 min-w-[24%]">
-          <ProfileCard />
+      <div className="flex flex-row scrollbar-hide m-0">
+        <div className="bg-white mt-auto min-w-[24%]">
+          <div className="fixed min-w-[24%] top-14">
+            <ProfileCard />
+          </div>
         </div>
 
         <div className="flex flex-col mt-8 pt-6 items-center gap-2 min-w-[50%] bg-white min-h-screen">
@@ -307,9 +312,10 @@ const Feed = () => {
             />
           )}
         </div>
-
-        <div className="mt-8 min-w-[24%] bg-white">
-          <FriendsList />
+            <div className=" fixed right-4 top-12">
+              <div className="mt-8 min-w-[24%] bg-white">
+              <FriendsList />
+            </div>
         </div>
       </div>
     </div>

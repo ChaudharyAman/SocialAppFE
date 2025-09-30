@@ -1,12 +1,13 @@
 import axios from "axios";
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 10000,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 api.interceptors.response.use(
   (response) => {
     if (response.data.statusCode === 419) {
