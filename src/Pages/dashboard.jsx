@@ -25,7 +25,7 @@ const Dashboard = () => {
   return (
     <div className="fixed inset-1 flex flex-col bg-white">
     <div className="bg-white min-h-screen flex flex-col">
-      <nav className="flex justify-between items-center px-6 bg-white shadow-md">
+      <nav className="flex justify-between mb-2 items-center px-6 bg-white shadow-md">
         <div
           className=" p-0 m-0 flex items-center cursor-pointer"
           onClick={() => navigate("/feed")}
