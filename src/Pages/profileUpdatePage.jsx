@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedinUser } from "../Redux/Slices/loggedInUserSlice";
 import api from "../Api/api";
+import { useNavigate } from "react-router-dom";
 import {
   FaUserEdit,
   FaTimes,
@@ -10,7 +11,6 @@ import {
   FaEnvelope,
   FaPhone,
   FaInfoCircle,
-  FaLock,
   FaGlobe,
 } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -20,6 +20,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
   const { data: loggedInUser, status } = useSelector(
     (state) => state.loggedInUser
   );
+  const navigate = useNavigate()
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -89,6 +90,7 @@ const ProfileUpdateModal = ({ isOpen, onClose }) => {
 
       toast.success("Profile updated successfully!");
       onClose();
+      navigate(0)
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to update profile");
     }
