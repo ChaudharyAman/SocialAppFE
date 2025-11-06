@@ -118,7 +118,7 @@ const CreatePost = () => {
           disabled={loading}
           className={`w-full py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 disabled:opacity-50 
           ${loading ? " opacity-70 cursor-not-allowed hover:scale-100" : "hover:scale-105 "}`}>
-          {loading ? "Posting..." : "Post"}
+          {loading ? `Posting... ${Loader}` : "Post"}
         </button>
       </form>
     </div>
