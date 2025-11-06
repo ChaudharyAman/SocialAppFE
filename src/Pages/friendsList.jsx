@@ -65,8 +65,8 @@ const FriendsList = () => {
       {error && <p className="text-center text-red-500 mt-4">{error}</p>}
 
 
-      <div className="h-110 overflow-y-auto scrollbar-hide pr-2">
-        <ul className="space-y-4">
+      <div className="h-110 overflow-y-auto scrollbar-hide pr-3">
+        <ul className="space-y-4 ">
           {filteredUsers.length === 0 && !loading ? (
             <p className="text-gray-500">No users to show</p>
           ) : (
@@ -75,7 +75,7 @@ const FriendsList = () => {
               return (
                 <li
                   key={user.id}
-                  className="flex items-center justify-between bg-gray-50 rounded-2xl p-4 shadow-sm hover:shadow-md transition"
+                  className="flex items-center justify-between bg-gray-50 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
                 >
                   <div className="flex items-center gap-3">
                     <img
@@ -84,7 +84,7 @@ const FriendsList = () => {
                       className="w-10 h-10 rounded-full border border-gray-300 object-cover"
                     />
                     <div>
-                      <h3 className="font-semibold text-gray-800">
+                      <h3 className="font-semibold mr-6 text-gray-800">
                         {user.first_name} {user.last_name}
                       </h3>
                       <p
