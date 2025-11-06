@@ -272,7 +272,7 @@ const Feed = () => {
                     <img
                       src={loggedInUser.media_url}
                       alt="your profile"
-                      className="w-8 h-8 rounded-full object-cover"
+                      className="w-8 h-8 rounded-full object-cover min-w-8 min-h-8"
                     />
                     <input
                       type="text"
@@ -284,7 +284,7 @@ const Feed = () => {
                           [post.post_id]: e.target.value,
                         }))
                       }
-                      className="flex-1 px-3 py-1 rounded-full border text-sm focus:outline-none"
+                      className="flex-1 px-3 w-auto py-1 rounded-full border text-sm focus:outline-none"
                     />
                     <button
                       onClick={() => handleCommentSubmit(post.post_id)}
