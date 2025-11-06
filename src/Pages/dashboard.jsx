@@ -27,10 +27,10 @@ const Dashboard = () => {
     <div className="bg-white min-h-screen flex flex-col">
       <nav className="flex justify-between mb-2 items-center px-6 bg-white shadow-md">
         <div
-          className=" p-0 m-0 flex items-center cursor-pointer"
+          className=" p-0 m-0 items-center cursor-pointer"
           onClick={() => navigate("/feed")}
         >
-          <img src={logo} alt="Logo" className="h-18 w-19" />
+          <img src={logo} alt="Logo" className="h-18 w-19 object-contain invisible md:visible" />
         </div>
 
         <div className="flex items-center gap-15">
