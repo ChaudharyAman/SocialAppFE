@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useState, useEffect, useRef } from "react";
 import { FaThumbsUp, FaRegCommentAlt } from "react-icons/fa";
 import api from "../Api/api";
@@ -144,7 +146,7 @@ const Feed = () => {
           </div>
         </div>
 
-        <div className="flex flex-col mt-8 pt-6 items-center gap-2 min-w-[50%] bg-white min-h-screen">
+        <div className="flex flex-col items-center gap-2 min-w-[50%] bg-white min-h-screen">
           <div className="w-full">
             <CreatePost />
           </div>

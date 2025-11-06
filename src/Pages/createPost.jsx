@@ -77,7 +77,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg mt-2  rounded-2xl">
+    <div className="max-w-xl mx-auto p-2 bg-white shadow-lg mt-1  rounded-2xl">
       <h2 className="text-2xl font-bold mb-6">💭 What’s on your mind?</h2>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
