@@ -138,8 +138,8 @@ const Feed = () => {
   return (
     <div>
       <div className="flex flex-row scrollbar-hide m-0">
-        <div className="bg-white mt-auto min-w-[24%]">
-          <div className="fixed min-w-[24%] top-14">
+        <div className="bg-white mt-auto min-w-[24%] hidden md:block">
+          <div className="fixed min-w-[24%] max-w-[25%] top-14">
             <ProfileCard />
           </div>
         </div>
@@ -312,8 +312,8 @@ const Feed = () => {
             />
           )}
         </div>
-            <div className=" fixed right-4 top-12">
-              <div className="mt-8 min-w-[24%] bg-white">
+            <div className=" bg-white mt-auto min-w-[24%] hidden md:block">
+              <div className="fixed min-w-[24%] max-w-[25%] top-20">
               <FriendsList />
             </div>
         </div>
