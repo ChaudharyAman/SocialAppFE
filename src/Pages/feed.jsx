@@ -268,7 +268,7 @@ const Feed = () => {
                 </div>
 
                 {loggedInUser && (
-                  <div className="flex items-center mt-3 gap-2">
+                  <div className="flex items-center mt-3 gap-2 w-full max-w-full overflow-hidden">
                     <img
                       src={loggedInUser.media_url}
                       alt="your profile"
@@ -284,7 +284,7 @@ const Feed = () => {
                           [post.post_id]: e.target.value,
                         }))
                       }
-                      className="flex-1 px-3 w-auto py-1 rounded-full border text-sm focus:outline-none"
+                      className="flex-1 px-3 w-auto py-1 min-w-0 rounded-full border text-sm focus:outline-none"
                     />
                     <button
                       onClick={() => handleCommentSubmit(post.post_id)}
