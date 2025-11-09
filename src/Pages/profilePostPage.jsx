@@ -168,7 +168,7 @@ const ProfilePostPage = () => {
   if (!loggedInUser) return null;
 
   return (
-    <div className="p-6 bg-gradient-to-b from-white to-gray-200 min-h-screen">
+    <div className="w-screen min-h-screen bg-gradient-to-b from-white to-gray-200 flex flex-col overflow-x-hidden overflow-y-auto m-0 p-0">
      <div className="relative w-full h-[40vh] rounded-lg overflow-hidden mb-2">
       <img
         src={loggedInUser.media_url}
@@ -202,7 +202,7 @@ const ProfilePostPage = () => {
             <div className="absolute sm:static top-2 right-2 sm:right-[-15px] flex sm:flex-col items-center sm:items-end gap-2 sm:gap-4 sm:justify-between h-auto sm:h-full py-2 sm:py-6">
               <button
                 onClick={handleLogout}
-                className="gap-2 cursor-pointer px-4 sm:px-7 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
+                className="gap-7 cursor-pointer px-4 sm:px-7 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
               >
                 <FaSignOutAlt /> Logout
               </button>
