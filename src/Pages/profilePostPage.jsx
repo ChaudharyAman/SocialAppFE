@@ -199,29 +199,29 @@ const ProfilePostPage = () => {
               </div>
             </div>
 
-            <div className="absolute sm:static top-2 right-2 sm:right-[-15px] flex sm:flex-col items-center sm:items-end gap-2 sm:gap-4 sm:justify-between h-auto sm:h-full py-2 sm:py-6">
-              <button
-                onClick={handleLogout}
-                className="gap-2 cursor-pointer px-4 sm:px-7 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
-              >
-                <FaSignOutAlt/>Logout
-              </button>
+          <div className="absolute lg:min-h-full md:min-h-full  sm:static top-2 right-2 sm:right-[-15px] flex flex-row sm:flex-col items-center sm:items-end justify-between gap-2 sm:gap-4 w-full sm:w-auto py-2 sm:py-6 px-2 sm:px-0">
+            <button
+              onClick={handleLogout}
+              className="flex-1 sm:flex-none gap-2 cursor-pointer px-3 sm:px-7 py-2 flex items-center justify-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
+            >
+              <FaSignOutAlt /> Logout
+            </button>
 
-              <span
-                onClick={showFriends}
-                className="text-gray-700 hover:text-black cursor-pointer hover:underline font-medium text-sm sm:text-base"
-              >
-                {`${loggedInUser.friends?.length || 0} • Connections`}
-              </span>
+            <span
+              onClick={showFriends}
+              className="flex-1 sm:flex-none text-center sm:text-right text-gray-700 hover:text-black cursor-pointer hover:underline font-medium text-sm sm:text-base"
+            >
+              {`${loggedInUser.friends?.length || 0} • Connections`}
+            </span>
 
-              <button
-                onClick={() => setIsProfileUpdateOpen(true)}
-                className="gap-2 cursor-pointer px-3 sm:px-4 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
-              >
-                <FaRegEdit /> Edit Profile
-              </button>
+            <button
+              onClick={() => setIsProfileUpdateOpen(true)}
+              className="flex-1 sm:flex-none gap-2 cursor-pointer px-3 sm:px-7 py-2 flex items-center justify-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
+            >
+              <FaRegEdit /> Edit Profile
+            </button>
+          </div>
 
-            </div>
           </div>
               <ProfileUpdateModal
                 isOpen={isProfileUpdateOpen}
