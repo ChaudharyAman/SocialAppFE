@@ -169,61 +169,65 @@ const ProfilePostPage = () => {
 
   return (
     <div className="p-6 bg-gradient-to-b from-white to-gray-200 min-h-screen">
-      <div className="relative w-full h-[40vh] rounded-lg overflow-hidden mb-2">
-        <img
-          src={loggedInUser.media_url}
-          alt="cover"
-          className="w-full h-full object-cover blur-md scale-110"
-        />
-        <div className="absolute inset-0 mb-2 flex justify-between items-end w-[95%] left-4">
-          <div className="flex items-center gap-6">
-            <img
-              src={loggedInUser.media_url}
-              alt="profile"
-              className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
-            />
-            <div>
-              <h1 className="text-2xl font-bold">
-                {loggedInUser.first_name} {loggedInUser.last_name}
-              </h1>
-              <h3 className="font-semibold text-gray-700 mt-2 hover:text-black hover:underline cursor-pointer">
-                @{loggedInUser.username}
-              </h3>
-              <div className="rounded-lg mt-1 mb-1 mr-4">
-                <span className="font-semibold">{loggedInUser.bio}</span>
+     <div className="relative w-full h-[40vh] rounded-lg overflow-hidden mb-2">
+      <img
+        src={loggedInUser.media_url}
+        alt="cover"
+        className="w-full h-full object-cover blur-md scale-110"
+      />
+
+          <div className="absolute inset-0 mb-2 flex flex-col sm:flex-row justify-between sm:items-end w-[95%] left-1/2 sm:left-4 -translate-x-1/2 sm:translate-x-0">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 items-center text-center sm:text-left mt-auto">
+              <img
+                src={loggedInUser.media_url}
+                alt="profile"
+                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-lg"
+              />
+
+              <div className="mt-2 sm:mt-0">
+                <h1 className="text-xl sm:text-2xl font-bold">
+                  {loggedInUser.first_name} {loggedInUser.last_name}
+                </h1>
+                <h3 className="font-semibold text-gray-700 mt-1 hover:text-black hover:underline cursor-pointer text-sm sm:text-base">
+                  @{loggedInUser.username}
+                </h3>
+                <div className="rounded-lg mt-1 mb-1 mr-0 sm:mr-4">
+                  <span className="font-semibold text-sm sm:text-base">
+                    {loggedInUser.bio}
+                  </span>
+                </div>
               </div>
             </div>
+
+            <div className="absolute sm:static top-2 right-2 sm:right-[-15px] flex sm:flex-col items-center sm:items-end gap-2 sm:gap-4 sm:justify-between h-auto sm:h-full py-2 sm:py-6">
+              <button
+                onClick={handleLogout}
+                className="gap-2 cursor-pointer px-4 sm:px-7 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+
+              <span
+                onClick={showFriends}
+                className="text-gray-700 hover:text-black cursor-pointer hover:underline font-medium text-sm sm:text-base"
+              >
+                {`${loggedInUser.friends?.length || 0} • Connections`}
+              </span>
+
+              <button
+                onClick={() => setIsProfileUpdateOpen(true)}
+                className="gap-2 cursor-pointer px-3 sm:px-4 py-1 sm:py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all text-sm sm:text-base"
+              >
+                <FaRegEdit /> Edit Profile
+              </button>
+
+            </div>
           </div>
-
-          <div className="absolute top-4 right-[-15px] flex flex-col items-end justify-between h-full py-6">
-            <button
-              onClick={handleLogout}
-              className="gap-2 cursor-pointer px-7 mt-[-20px] py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all"
-            >
-              <FaSignOutAlt /> Logout
-            </button>
-
-            <span
-              onClick={showFriends}
-              className="text-gray-700 mr-[10px] hover:text-black cursor-pointer hover:underline font-medium"
-            >
-              {`${loggedInUser.friends?.length || 0} • Connections`}
-            </span>
-
-            <button
-              onClick={() => setIsProfileUpdateOpen(true)}
-              className="gap-2 cursor-pointer px-4 mt-[-20px] py-2 flex items-center bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all"
-            >
-              <FaRegEdit /> Edit Profile
-            </button>
-
-            <ProfileUpdateModal
-              isOpen={isProfileUpdateOpen}
-              onClose={() => setIsProfileUpdateOpen(false)}
-            />
-          </div>
+              <ProfileUpdateModal
+                isOpen={isProfileUpdateOpen}
+                onClose={() => setIsProfileUpdateOpen(false)}
+              />
         </div>
-      </div>
 
       <div className="rounded-xl">
         <ProfileNavbar onFilter={setFilter} />
