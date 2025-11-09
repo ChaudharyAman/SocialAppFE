@@ -5,7 +5,7 @@ import heroLogo from "../Logo/undraw_login_weas.svg";
 import sticker1 from "../Logo/undraw_make-it-rain_vyg9.svg";
 import sticker2 from "../Logo/undraw_cool-break_cipj.svg";
 import { useNavigate } from "react-router-dom";
-import Loader from "../Logo/loader";
+
 
 
 function Login() {
