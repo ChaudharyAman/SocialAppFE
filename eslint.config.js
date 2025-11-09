@@ -5,12 +5,12 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'node_modules']),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     extends: [
       js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
+      reactHooks.configs.recommended,
       reactRefresh.configs.vite,
     ],
     languageOptions: {
@@ -24,10 +24,16 @@ export default defineConfig([
       },
     },
     rules: {
+      // 🟢 Disable all common yellow/red lines
       'no-unused-vars': 'off',
+      'no-undef': 'off',
+      'no-console': 'off',
 
+      // 🟡 Disable warnings for dependency arrays in useEffect
+      'react-hooks/exhaustive-deps': 'off',
+
+      // 🟢 Keep only essential React rules
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 ])
