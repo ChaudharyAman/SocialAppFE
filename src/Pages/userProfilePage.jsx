@@ -231,6 +231,7 @@ const UserProfilePage = () => {
                 className="px-4 py-2 flex items-center gap-2 bg-red-100 text-red-600 rounded-lg shadow hover:bg-red-600/90 hover:text-white transition-all"
                 title="Remove Friend"
               >
+                
                 <FaUserTimes /> Remove Friend
               </button>
             ) : friendStatus === "pending" ? (
