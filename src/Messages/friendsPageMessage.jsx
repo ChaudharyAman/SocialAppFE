@@ -92,7 +92,7 @@ const FriendsPage = () => {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
-      <div className="w-1/3 border-r border-gray-300 backdrop-blur-lg bg-white/80 shadow-lg flex flex-col">
+      <div className="w-1/3 border-r border-gray-300 backdrop-blur-lg bg-white flex flex-col">
         <div className="p-5 border-b border-gray-300 flex items-center gap-3">
           <FaUserFriends className="text-gray-700 text-2xl" />
           <h2 className="font-bold text-2xl text-gray-800 tracking-wide">
